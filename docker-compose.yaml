@@ -15,10 +15,10 @@ services:
   #     - ./webapp/logs/mysql-chair:/var/log/mysql-chair
   #     - ./webapp/logs/mysql-estate:/var/log/mysql-estate
 
-  # pprof:
-  #   build: 
-  #     context: ./
-  #     dockerfile: ./Dockerfile.pprof
-  #   volumes:
-  #     - ./webapp/logs/pprof:/tmp/profile
-  #   command: go tool pprof -png /tmp/profile/cpu.pprof > profile.png
+  pprof:
+    build: 
+      context: ./pprof
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./pprof/profilefiles:/tmp/profile
+    command: go tool pprof -png /tmp/profile/cpu.pprof > profile.png
