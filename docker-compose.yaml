@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  kataribe:
+    build:
+      context: ./kataribe
+      dockerfile: Dockerfile
+    volumes:
+      - ./kataribe/kataribe-config:/workdir
+      - ./kataribe/webserver-log:/logs
+
+  # slowquery:
+  #   image: mysql:5.7
+  #   volumes:
+  #     - ./webapp/logs/mysql-chair:/var/log/mysql-chair
+  #     - ./webapp/logs/mysql-estate:/var/log/mysql-estate
+
+  # pprof:
+  #   build: 
+  #     context: ./
+  #     dockerfile: ./Dockerfile.pprof
+  #   volumes:
+  #     - ./webapp/logs/pprof:/tmp/profile
+  #   command: go tool pprof -png /tmp/profile/cpu.pprof > profile.png
