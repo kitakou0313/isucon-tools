@@ -1,5 +1,5 @@
 # isucon-tools
-isuconで使うツール群をdockerで使えるようにまとめたtemplare
+isuconで使うツール群をdockerで使えるようにまとめたtemplate
 
 
 # Tools
