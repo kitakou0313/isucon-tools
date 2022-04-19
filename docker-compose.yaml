@@ -21,3 +21,4 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./pprof/profilefiles:/tmp/profile
+      - ./pprof/output:/tmp/output
