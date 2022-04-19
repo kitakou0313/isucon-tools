@@ -9,11 +9,10 @@ services:
       - ./kataribe/kataribe-config:/workdir
       - ./kataribe/webserver-log:/logs
 
-  # slowquery:
-  #   image: mysql:5.7
-  #   volumes:
-  #     - ./webapp/logs/mysql-chair:/var/log/mysql-chair
-  #     - ./webapp/logs/mysql-estate:/var/log/mysql-estate
+  slowquery:
+    image: mysql:8.0
+    volumes:
+      - ./mysql-slowquery/mysql-slowquery-log:/var/log/slowquery-log
 
   pprof:
     build: 

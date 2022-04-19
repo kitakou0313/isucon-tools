@@ -9,3 +9,7 @@ pprof:
 .PHONY: pprof-cmd
 pprof-cmd:
 	docker-compose run --rm pprof bash -c "go tool pprof /tmp/profile/cpu.pprof"
+
+.PHONY: slowquery
+slowquery:
+	docker-compose run --rm slowquery mysqldumpslow -s t -t 5 /var/log/slowquery-log/mysql-slow.log
