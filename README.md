@@ -10,3 +10,8 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
     - Analyze mysql slow log
 - pprof
     - Analyze golang application performance.
+
+# ToDo
+- Implement scripts
+    - in `./bench`
+    - in `./deploy`
