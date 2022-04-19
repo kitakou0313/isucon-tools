@@ -4,7 +4,7 @@ services:
   kataribe:
     build:
       context: ./kataribe
-      dockerfile: Dockerfile
+      dockerfile: ./Dockerfile
     volumes:
       - ./kataribe/kataribe-config:/workdir
       - ./kataribe/webserver-log:/logs
@@ -21,4 +21,3 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./pprof/profilefiles:/tmp/profile
-    command: go tool pprof -png /tmp/profile/cpu.pprof > profile.png
