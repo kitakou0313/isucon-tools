@@ -11,6 +11,10 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
 - pprof
     - Analyze golang application performance.
 
+
+# Test scripts
+- `deploy-test` container is accessible with ssh, and installed `nginx`, `mysql`. Please use this to test your deploy scripts.
+
 # ToDo
 - Implement scripts
     - in `./bench`

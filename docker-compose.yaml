@@ -21,3 +21,10 @@ services:
     volumes:
       - ./pprof/profilefiles:/tmp/profile
       - ./pprof/output:/tmp/output
+  
+  deploy-test:
+    build:
+      context: ./deploy-test
+      dockerfile: ./Dockerfile
+    ports:
+      - "2222:22"
