@@ -13,7 +13,7 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
 
 
 # Test scripts
-- `deploy-test` container is accessible with ssh, and installed `nginx`, `mysql`. Please use this to test your deploy scripts.
+- `deploy-test` container is accessible with ssh, and `nginx`, `mysql` is installed. Please use this to test your deploy scripts.
 
 # ToDo
 - Implement scripts
