@@ -26,5 +26,7 @@ services:
     build:
       context: ./deploy-test
       dockerfile: ./Dockerfile
+      args:
+        - PASSWD=${PASSWD}
     ports:
       - "2222:22"
