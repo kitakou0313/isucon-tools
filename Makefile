@@ -13,3 +13,7 @@ pprof-cmd:
 .PHONY: slowquery
 slowquery:
 	docker-compose run --rm slowquery mysqldumpslow -s t -t 5 /var/log/slowquery-log/mysql-slow.log
+
+.PHONY: up-test-server
+up-test-server:
+	docker-compose up -d deploy-test
