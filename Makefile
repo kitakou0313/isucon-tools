@@ -1,5 +1,5 @@
 build:
-	docker-compose build
+	docker-compose build kataribe slowquery pprof
 
 .PHONY: kataribe
 kataribe:
