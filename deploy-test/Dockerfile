@@ -4,7 +4,7 @@ ARG PASSWD
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get install -y openssh-server nginx mysql-server tzdata
+RUN apt-get update && apt-get install -y openssh-server nginx mysql-server tzdata rsync
 RUN mkdir /var/run/sshd
 RUN echo 'root:'${PASSWD} | chpasswd
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
