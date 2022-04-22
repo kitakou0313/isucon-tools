@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start the first process
-/usr/sbin/sshd -D
+/usr/sbin/sshd
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start my_first_process: $status"
@@ -9,7 +9,7 @@ if [ $status -ne 0 ]; then
 fi
 
 # Start the second process
-/usr/sbin/nginx -D
+/usr/sbin/nginx
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start my_second_process: $status"
