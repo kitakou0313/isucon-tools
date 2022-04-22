@@ -1,6 +1,11 @@
 # isucon-tools
 isuconで使うツール群をdockerで使えるようにまとめたtemplate
 
+# How To Use
+- Create repository based this template.
+- Clone repository
+- Run `make build`
+    - build docker images for tools.
 
 # Tools
 - kataribe
