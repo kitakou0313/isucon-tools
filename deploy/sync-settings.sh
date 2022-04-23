@@ -15,12 +15,4 @@ do
   rsync -e "ssh -p 2222" -av ../kataribe/webserver-config/nginx.conf root@${host}:/etc/nginx/nginx.conf
 done
 
-# for server in isu01 isu02 isu03; do
-#     ssh -t $server "sudo systemctl stop isucon.golang.service"
-#     scp ./app $server:/home/isucon/webapp/go/isucon
-#     # templateは別途rsyncする必要がある
-#     rsync -av ./src/isucon/views/ $server:/home/isucon/webapp/go/src/isucon/views/
-#     ssh -t $server "sudo systemctl start isucon.golang.service"
-# done
-
 echo "finish deploy ${USER}"
