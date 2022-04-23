@@ -15,6 +15,8 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 
 EXPOSE 22
 
+COPY ./access.log.example /var/log/nginx/access.log
+
 WORKDIR /horm/root
 COPY entrypoint.sh ./
 CMD ["./entrypoint.sh"]
