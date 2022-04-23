@@ -15,4 +15,4 @@ do
   rsync -e "ssh -p 2222" -av ../kataribe/webserver-config/nginx.conf root@${host}:/etc/nginx/nginx.conf
 done
 
-echo "finish deploy ${USER}"
+echo "Finish deploy"
