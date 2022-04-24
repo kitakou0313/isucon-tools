@@ -13,6 +13,7 @@ for host in "${trghosts[@]}"
 do
   echo "Fetch log from ${host}"
   rsync -e "ssh -p 2222" -av root@${host}:/var/log/nginx/access.log ./kataribe/webserver-log/access.log
+  # Fetch mysql slowquery-log
 done
 
 echo "Finish to fetch log files"
