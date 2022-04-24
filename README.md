@@ -28,3 +28,4 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
 
 ## Refs
 - https://qiita.com/y-vectorfield/items/587d3f3a6eec8f251f3c
+- https://blog.yuuk.io/entry/web-operations-isucon
