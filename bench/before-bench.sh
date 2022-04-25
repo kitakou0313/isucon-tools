@@ -15,7 +15,6 @@ for host in "${trghosts[@]}"
 do
   echo "Backup log file in ${host}"
   ssh -p 2222 root@${host} 'sh -s ' < ./bench/backup-log.sh
-  # Restart process
 done
 
 echo "Finish to bk log files"
