@@ -23,6 +23,7 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
 # ToDo
 - Implement scripts
     - in `./bench`
+        - Implement script to fetch pprof output.
     - in `./deploy`
 
 

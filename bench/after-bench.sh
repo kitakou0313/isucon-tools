@@ -2,6 +2,7 @@
 set -e
 # This scripts is used to 
 # - fetch log files(nginx, mysql logs) to analyze in local.
+# - fetch pprof output
 
 echo "Start to fetch log file from localhost"
 
