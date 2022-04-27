@@ -6,6 +6,8 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
 - Clone repository
 - Run `make build`
     - build docker images for tools.
+- Add hostname and `SSH` port number in `./hosts/hosts.txt`
+    - Other scripts will access hosts defined in this file.
 
 # Tools
 - kataribe
