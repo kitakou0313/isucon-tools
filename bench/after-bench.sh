@@ -6,9 +6,7 @@ set -e
 
 echo "Start to fetch log file from localhost"
 
-isu01="localhost"
-
-trghosts=($isu01)
+source ./hosts/hosts.txt
 
 for host in "${trghosts[@]}"
 do
