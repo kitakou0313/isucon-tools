@@ -5,9 +5,7 @@ set -e
 
 echo "Start to sync config files"
 
-isu01="localhost"
-
-trghosts=($isu01)
+source ./hosts/hosts.txt
 
 for host in "${trghosts[@]}"
 do

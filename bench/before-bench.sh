@@ -7,9 +7,7 @@ set -e
 
 echo "Start to clean logs in remote hosts"
 
-isu01="localhost"
-
-trghosts=($isu01)
+source ./hosts/hosts.txt
 
 for host in "${trghosts[@]}"
 do
