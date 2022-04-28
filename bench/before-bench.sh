@@ -14,7 +14,7 @@ trghosts=($isu01)
 for host in "${trghosts[@]}"
 do
   echo "Backup log file in ${host}"
-  ssh -p 2222 root@${host} 'sh -s ' < ./bench/backup-clean-log.sh
+  ssh -p 2222 root@${host} 'sh -s ' < ./bench/utils/backup-clean-log.sh
 done
 
 echo "Finish to bk log files"
