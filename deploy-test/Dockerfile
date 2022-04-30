@@ -18,6 +18,7 @@ EXPOSE 22
 COPY ./access.log.example /var/log/nginx/access.log
 
 WORKDIR /home/root
-RUN mkdir -p webapp/sample/src
+RUN mkdir -p webapp/sample
+RUN mkdir -p webapp/sample/sql
 COPY entrypoint.sh ./
 CMD ["./entrypoint.sh"]
