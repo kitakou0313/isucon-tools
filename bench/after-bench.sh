@@ -15,7 +15,7 @@ do
   
   # Fetch pprof logs
   echo "Fetch pprof log from ${host}"
-  # rsync -e "ssh -p 2222" -av root@${host}:/ ./pprof/profilefiles/cpu.pprof
+  rsync -e "ssh -p 2222" -av root@${host}:/home/root/webapp/cpu.pprof ./pprof/profilefiles/cpu.pprof
 
   # Fetch mysql slowquery-log
 done
