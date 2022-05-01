@@ -10,8 +10,8 @@ source ./hosts/hosts.txt
 for host in "${trghosts[@]}"
 do
   echo "Deploy to ${host}"
-  rsync -e "ssh -p 2222" -av ./webapp/sample-webapp/sample root@${host}:/home/root/webapp/sample
-  rsync -e "ssh -p 2222" -av ./webapp/sample-webapp/sql/ root@${host}:/home/root/webapp/sample/sql
+  rsync -e "ssh -p 2222" -av ./webapp/sample-webapp/sample root@${host}:/home/root/webapp/main
+  rsync -e "ssh -p 2222" -av ./webapp/sample-webapp/sql/ root@${host}:/home/root/webapp/isucon/sql
 done
 
 echo "Finish to deploy apps"
