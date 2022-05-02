@@ -12,7 +12,8 @@ source ./hosts/hosts.txt
 for host in "${trghosts[@]}"
 do
   echo "Backup log and clean log in ${host}"
-  ssh -p 2222 root@${host} 'sh -s ' < ./bench/utils/backup-clean-log.sh
+  ssh -p 2222 root@${host} 'sh -s ' < ./bench/utils/nginx-backup-clean-log.sh
+  ssh -p 2222 root@${host} 'sh -s ' < ./bench/utils/slowquery-backup-clean-log.sh
 done
 
 echo "Finish to backup log and clean log"
