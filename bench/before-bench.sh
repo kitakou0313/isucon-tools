@@ -11,8 +11,8 @@ source ./hosts/hosts.txt
 
 for host in "${trghosts[@]}"
 do
-  echo "Backup log file in ${host}"
+  echo "Backup log and clean log in ${host}"
   ssh -p 2222 root@${host} 'sh -s ' < ./bench/utils/backup-clean-log.sh
 done
 
-echo "Finish to bk log files"
+echo "Finish to backup log and clean log"
