@@ -16,6 +16,7 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 EXPOSE 22
 
 COPY ./access.log.example /var/log/nginx/access.log
+COPY ./mysql-slow.log.example /var/log/mysql/mysql-slow.log
 
 WORKDIR /home/root
 RUN mkdir -p webapp/isucon

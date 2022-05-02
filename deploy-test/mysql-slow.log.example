@@ -1,0 +1,30 @@
+# Time: 2022-04-17T06:12:34.047877Z
+# User@Host: isucon[isucon] @  [172.29.0.5]  Id:  1660
+# Query_time: 0.000070  Lock_time: 0.000000 Rows_sent: 25  Rows_examined: 2092
+SET timestamp=1650175954;
+# administrator command: Close stmt;
+# Time: 2022-04-17T06:12:34.049252Z
+# User@Host: isucon[isucon] @  [172.29.0.5]  Id:  1666
+# Query_time: 0.006551  Lock_time: 0.000159 Rows_sent: 25  Rows_examined: 1057
+SET timestamp=1650175954;
+SELECT id, thumbnail, name, description, latitude, longitude, address, rent, door_height, door_width, features, popularity, popularity_desc FROM estate WHERE door_height < 80 AND door_width >= 110 AND door_width < 150 AND rent >= 100000 AND rent < 150000 ORDER BY popularity_desc ASC, id ASC LIMIT 25 OFFSET 0;
+# Time: 2022-04-17T06:12:34.050528Z
+# User@Host: isucon[isucon] @  [172.29.0.5]  Id:  1666
+# Query_time: 0.000062  Lock_time: 0.000000 Rows_sent: 25  Rows_examined: 1057
+SET timestamp=1650175954;
+# administrator command: Close stmt;
+# Time: 2022-04-17T06:12:34.050696Z
+# User@Host: isucon[isucon] @  [172.29.0.5]  Id:  1666
+# Query_time: 0.000030  Lock_time: 0.000000 Rows_sent: 25  Rows_examined: 1057
+SET timestamp=1650175954;
+# administrator command: Quit;
+# Time: 2022-04-17T06:12:52.779582Z
+# User@Host: isucon[isucon] @  [172.29.0.5]  Id:  1651
+# Query_time: 0.000023  Lock_time: 0.000000 Rows_sent: 25  Rows_examined: 264
+SET timestamp=1650175972;
+# administrator command: Quit;
+# Time: 2022-04-17T06:12:52.779632Z
+# User@Host: isucon[isucon] @  [172.29.0.5]  Id:  1660
+# Query_time: 0.000014  Lock_time: 0.000000 Rows_sent: 25  Rows_examined: 2092
+SET timestamp=1650175972;
+# administrator command: Quit;
