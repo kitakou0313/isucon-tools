@@ -11,6 +11,7 @@ for host in "${trghosts[@]}"
 do
   echo "Send configs to ${host}"
   rsync -e "ssh -p 2222" -av ./kataribe/webserver-config/nginx.conf root@${host}:/etc/nginx/nginx.conf
+  rsync -e "ssh -p 2222" -av ./mysql-slowquery/mysql-config/my.cnf root@${host}:/etc/mysql/my.cnf
 done
 
 echo "Finish to sync config files"
