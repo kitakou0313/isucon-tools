@@ -26,6 +26,7 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
 - Implement scripts for mysql db
     - in `./bench`
     - in `./deploy`
+- Define CI test
 
 
 ## Refs
