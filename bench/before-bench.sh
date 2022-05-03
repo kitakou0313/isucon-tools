@@ -8,12 +8,13 @@ set -e
 echo "Start to clean logs in remote hosts"
 
 source ./hosts/hosts.txt
+HOSTS_NUM=${#trghosts[@]}
 
-for host in "${trghosts[@]}"
+for ((host_idx=0; host_idx<${HOSTS_NUM}; host_idx++));
 do
-  echo "Backup log and clean log in ${host}"
-  ssh -p 2222 root@${host} 'sh -s ' < ./bench/utils/nginx-backup-clean-log.sh
-  ssh -p 2222 root@${host} 'sh -s ' < ./bench/utils/slowquery-backup-clean-log.sh
+  echo "Backup log and clean log in ${trghosts[host_idx]}:${trgports[host_idx]}"
+  ssh -p ${trgports[host_idx]} root@${trghosts[host_idx]} 'sh -s ' < ./bench/utils/nginx-backup-clean-log.sh
+  ssh -p ${trgports[host_idx]} root@${trghosts[host_idx]} 'sh -s ' < ./bench/utils/slowquery-backup-clean-log.sh
 done
 
 echo "Finish to backup log and clean log"

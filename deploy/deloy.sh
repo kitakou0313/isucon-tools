@@ -6,12 +6,13 @@ set -e
 echo "Start to deploy apps"
 
 source ./hosts/hosts.txt
+HOSTS_NUM=${#trghosts[@]}
 
-for host in "${trghosts[@]}"
+for ((host_idx=0; host_idx<${HOSTS_NUM}; host_idx++));
 do
-  echo "Deploy to ${host}"
-  rsync -e "ssh -p 2222" -av ./webapp/sample-webapp/sample root@${host}:/home/root/webapp/main
-  rsync -e "ssh -p 2222" -av ./webapp/sample-webapp/sql/ root@${host}:/home/root/webapp/isucon/sql
+  echo "Deploy to ${trghosts[host_idx]}:${trgports[host_idx]}"
+  rsync -e "ssh -p ${trgports[host_idx]}" -av ./webapp/sample-webapp/sample root@${trghosts[host_idx]}:/home/root/webapp/main
+  rsync -e "ssh -p ${trgports[host_idx]}" -av ./webapp/sample-webapp/sql/ root@${trghosts[host_idx]}:/home/root/webapp/isucon/sql
 done
 
 echo "Finish to deploy apps"

@@ -6,12 +6,13 @@ set -e
 echo "Start to sync config files"
 
 source ./hosts/hosts.txt
+HOSTS_NUM=${#trghosts[@]}
 
-for host in "${trghosts[@]}"
+for ((host_idx=0; host_idx<${HOSTS_NUM}; host_idx++));
 do
-  echo "Send configs to ${host}"
-  rsync -e "ssh -p 2222" -av ./kataribe/webserver-config/nginx.conf root@${host}:/etc/nginx/nginx.conf
-  rsync -e "ssh -p 2222" -av ./mysql-slowquery/mysql-config/my.cnf root@${host}:/etc/mysql/my.cnf
+  echo "Send configs to ${trghosts[host_idx]}:${trgports[host_idx]}"
+  rsync -e "ssh -p ${trgports[host_idx]}" -av ./kataribe/webserver-config/nginx.conf root@${trghosts[host_idx]}:/etc/nginx/nginx.conf
+  rsync -e "ssh -p ${trgports[host_idx]}" -av ./mysql-slowquery/mysql-config/my.cnf root@${trghosts[host_idx]}:/etc/mysql/my.cnf
 done
 
 echo "Finish to sync config files"
