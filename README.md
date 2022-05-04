@@ -23,9 +23,6 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
 - `deploy-test` container is accessible with ssh, and `nginx`, `mysql` is installed. Please use this to test your deploy scripts.
 
 # ToDo
-- Implement scripts for mysql db
-    - in `./bench`
-    - in `./deploy`
 - Define CI test
 
 
