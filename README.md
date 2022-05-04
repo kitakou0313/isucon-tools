@@ -1,31 +1,60 @@
 # isucon-tools
 isuconで使うツール群をdockerで使えるようにまとめたtemplate
 
-# How To Use
-- Create repository based this template.
-- Clone repository
-- Run `make build`
-    - build docker images for tools.
-- Add hostname and `SSH` port number in `./hosts/hosts.txt`
-    - Other scripts will access hosts defined in this file.
+## 使用準備
+- 本テンプレートを使ってリポジトリを作成します
+- `make build`を実行します
+    - ツールを実行するためのdocker imageがビルドされます
+- 本番環境への接続情報（ホスト名|IPアドレス、`SSH`のポート番号）を`./hosts/hosts.txt`に記述します
+    - 本リポジトリ内のスクリプトはこのファイル内の接続情報を用いて通信します
 
-# Tools
+## 使用可能なツール群
+
+### 解析用ツール
+dockerを用いて実行されるため、インストール不要で使用可能です。よく使う形式を`make`コマンド内でまとめていますが、直接`docker compose run...`で実行することで任意のオプションを使用できます。
+
 - kataribe
     - https://github.com/matsuu/kataribe
-    - Analyze web-server(nginx, etc...) access log.
+    - nginxなどのwebサーバーのログから実行時間を解析
+    - 実行時間を占めているエンドポイントの発見などに使用可能
 - mysqlslowdump
-    - Analyze mysql slow log
+    - MySQLのスローログを解析
+    - 実行時間が長いクエリを発見できる
+    - DBがボトルネックになっているケースで有効
+        - indexが効いていない、テーブルの結合が遅いなど
 - pprof
-    - Analyze golang application performance.
+    - Golang用のパフォーマンス分析ツール
+    - アプリケーション側の処理時間を解析できる
+    - アプリケーションがボトルネックになっている場合に有効
+        - htmlのtemplateに関する処理など
 
+### デプロイ、ベンチ関連のツール
+実行環境によって詳細なパス、管理したいファイルなどは異なると思うので、調整していただければと思います
 
-# Test scripts
-- `deploy-test` container is accessible with ssh, and `nginx`, `mysql` is installed. Please use this to test your deploy scripts.
+- `bench/before-bench.sh`
+    - ベンチ実行前に行う処理をまとめたスクリプト
+        - 本番環境内のログのバックアップ、初期化
+            - 前ベンチのログの混入を防ぐため
+- `bench/after-bench.sh`
+    - ベンチ完了後の処理をまとめたスクリプト
+        - nginxの`access.log`, MySQLのスロークエリログ、`pprof`の出力ファイルの取得
+- `deploy/deloy.sh`
+    - 本番環境へのデプロイ用スクリプト
+    - ビルドしたwebアプリケーションの実行ファイル+データベースの初期化用SQLファイルのデプロイ
+        - 近年のisuconではベンチ開始時に`/initialize`エンドポイントにアクセス、データベースの再作成+データ投入+indexの作成が行われ、参加者はこの初期化用SQLファイルにインデックスの定義を記述するケースが多いため、同時にデプロイする形式にしています
+- `deploy/sync-settings.sh`
+    - 各種設定ファイルをリモートに送信
+        - nginxの`nginx.conf`、MySQLの`my.cnf`
+    - 大会形式によっては環境変数管理用の`.env`なども管理する必要がありそうなので良い感じに調整してください
 
-# ToDo
-- Define CI test
+## スクリプトのテストについて
+- `docker-compose.yaml`内の`deploy-test`コンテナには`nginx`, `mysql`がインストールされており、`SSH`経由でアクセス可能になっています。デプロイなどに用いるスクリプトのテストに使用してください。
 
+## ToDo
+- `deploy-test`コンテナ内でsystemdを使用可能にする
+    - より近年の本番形式に近づける
+- シェルスクリプトのCIテストを書く
 
-## Refs
+## 参考にさせていただいたサイト
 - https://qiita.com/y-vectorfield/items/587d3f3a6eec8f251f3c
 - https://blog.yuuk.io/entry/web-operations-isucon
