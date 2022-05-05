@@ -1,8 +1,0 @@
-version: '3.8'
-services:
-  builder:
-    build:
-      context: ./
-      dockerfile: ./
-    command: go build -o main cmd/main.go
-    

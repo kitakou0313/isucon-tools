@@ -1,2 +1,2 @@
 build:
-	go build -o sample cmd/main.go
+	docker compose run --rm builder

@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  builder:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./:/app
+    command: go build -o test cmd/main.go
+    
