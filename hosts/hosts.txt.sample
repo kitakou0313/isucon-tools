@@ -3,3 +3,5 @@ trghosts=($isu1)
 
 portisu1=2222
 trgports=($portisu1)
+
+HOSTS_NUM=${#trghosts[@]}
