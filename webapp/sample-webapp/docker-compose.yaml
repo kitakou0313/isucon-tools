@@ -6,5 +6,9 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./:/app
-    command: go build -o test cmd/main.go
+    environment:
+      - GOOS=linux
+      - GOARCH=386
+      - CGO_ENABLED=0=value
+    command: go build -o sample cmd/main.go
     
