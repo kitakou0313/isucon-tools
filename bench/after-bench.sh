@@ -7,7 +7,6 @@ set -e
 echo "Start to fetch log file from localhost"
 
 source ./hosts/hosts.txt
-HOSTS_NUM=${#trghosts[@]}
 
 for ((host_idx=0; host_idx<${HOSTS_NUM}; host_idx++));
 do

@@ -8,7 +8,6 @@ set -e
 echo "Start to clean logs in remote hosts"
 
 source ./hosts/hosts.txt
-HOSTS_NUM=${#trghosts[@]}
 
 for ((host_idx=0; host_idx<${HOSTS_NUM}; host_idx++));
 do
