@@ -17,6 +17,7 @@ EXPOSE 22
 
 COPY ./access.log.example /var/log/nginx/access.log
 COPY ./mysql-slow.log.example /var/log/mysql/mysql-slow.log
+COPY ./cpu.pprof.example /home/root/webapp/cpu.pprof
 
 WORKDIR /home/root
 RUN mkdir -p webapp/isucon
