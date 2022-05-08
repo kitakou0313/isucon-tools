@@ -9,11 +9,17 @@ echo "Start to clean logs in remote hosts"
 
 source ./hosts/hosts.txt
 
-for ((host_idx=0; host_idx<${HOSTS_NUM}; host_idx++));
+for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
 do
-  echo "Backup log and clean log in ${trghosts[host_idx]}:${trgports[host_idx]}"
-  ssh -p ${trgports[host_idx]} root@${trghosts[host_idx]} 'bash -s ' < ./bench/utils/nginx-backup-clean-log.sh
-  ssh -p ${trgports[host_idx]} root@${trghosts[host_idx]} 'bash -s ' < ./bench/utils/slowquery-backup-clean-log.sh
+  echo "Backup log and clean log in ${FRONTEND_HOSTS[host_idx]}:${FRONTEND_HOSTS_SSH_PORT[host_idx]}"
+  ssh -p ${FRONTEND_HOSTS_SSH_PORT[host_idx]} root@${FRONTEND_HOSTS[host_idx]} 'bash -s ' < ./bench/utils/nginx-backup-clean-log.sh
+done
+
+
+for ((host_idx=0; host_idx<${DB_HOSTS_NUMS}; host_idx++));
+do
+  echo "Backup log and clean log in ${DB_HOSTS[host_idx]}:${DB_HOSTS_SSH_PORT[host_idx]}"
+  ssh -p ${DB_HOSTS_SSH_PORT[host_idx]} root@${DB_HOSTS[host_idx]} 'bash -s ' < ./bench/utils/slowquery-backup-clean-log.sh
 done
 
 echo "Finish to backup log and clean log"

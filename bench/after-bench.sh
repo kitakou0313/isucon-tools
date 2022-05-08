@@ -8,18 +8,24 @@ echo "Start to fetch log file from localhost"
 
 source ./hosts/hosts.txt
 
-for ((host_idx=0; host_idx<${HOSTS_NUM}; host_idx++));
+for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
 do
-  echo "Fetch log from ${trghosts[host_idx]}:${trgports[host_idx]}"
-  rsync -e "ssh -p ${trgports[host_idx]}" -av root@${trghosts[host_idx]}:/var/log/nginx/access.log ./kataribe/webserver-log/access.log
+  echo "Fetch log from ${FRONTEND_HOSTS[host_idx]}:${FRONTEND_HOSTS_SSH_PORT[host_idx]}"
+  rsync -e "ssh -p ${FRONTEND_HOSTS_SSH_PORT[host_idx]}" -av root@${FRONTEND_HOSTS[host_idx]}:/var/log/nginx/access.log ./kataribe/webserver-log/access.log
+done
 
+for ((host_idx=0; host_idx<${DB_HOSTS_NUMS}; host_idx++));
+do
   # Fetch mysql slowquery-log
-  echo "Fetch mysql slow query log from ${trghosts[host_idx]}:${trgports[host_idx]}"
-  rsync -e "ssh -p ${trgports[host_idx]}" -av root@${trghosts[host_idx]}:/var/log/mysql/mysql-slow.log ./mysql-slowquery/mysql-slowquery-log/mysql-slow.log
-  
+  echo "Fetch mysql slow query log from ${DB_HOSTS[host_idx]}:${DB_HOSTS_SSH_PORT[host_idx]}"
+  rsync -e "ssh -p ${DB_HOSTS_SSH_PORT[host_idx]}" -av root@${DB_HOSTS[host_idx]}:/var/log/mysql/mysql-slow.log ./mysql-slowquery/mysql-slowquery-log/mysql-slow.log
+done
+
+for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
+do 
   # Fetch pprof logs
-  echo "Fetch pprof log from ${trghosts[host_idx]}:${trgports[host_idx]}"
-  rsync -e "ssh -p ${trgports[host_idx]}" -av root@${trghosts[host_idx]}:/home/root/webapp/cpu.pprof ./pprof/profilefiles/cpu.pprof
+  echo "Fetch pprof log from ${APP_HOSTS[host_idx]}:${APP_HOSTS_SSH_PORT[host_idx]}"
+  rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]}" -av root@${APP_HOSTS[host_idx]}:/home/root/webapp/cpu.pprof ./pprof/profilefiles/cpu.pprof
 
 done
 
