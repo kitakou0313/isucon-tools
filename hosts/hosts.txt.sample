@@ -1,7 +1,14 @@
-isu1="localhost"
-trghosts=($isu1)
+ISU1="localhost"
+ISU1_SSH_PORT=2222
 
-portisu1=2222
-trgports=($portisu1)
+FRONTEND_HOSTS=($isu1)
+FRONTEND_HOSTS_SSH_PORT=($ISU1_SSH_PORT)
+FRONTEND_HOSTS_NUMS=${#FRONTEND_HOSTS[@]}
 
-HOSTS_NUM=${#trghosts[@]}
+APP_HOSTS=($isu1)
+APP_HOSTS_SSH_PORT=($ISU1_SSH_PORT)
+APP_HOSTS_NUMS=${#APP_HOSTS[@]}
+
+DB_HOSTS=($isu1)
+DB_HOSTS_SSH_PORT=($ISU1_SSH_PORT)
+DB_HOSTS_NUMS=${#DB_HOSTS[@]}
