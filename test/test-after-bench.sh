@@ -24,19 +24,26 @@ do
     fi
 done
 
-# for ((host_idx=0; host_idx<${DB_HOSTS_NUMS}; host_idx++));
-# do
-#   # Fetch mysql slowquery-log
-#   echo "Fetch mysql slow query log from ${DB_HOSTS[host_idx]}:${DB_HOSTS_SSH_PORT[host_idx]}"
-#   rsync -e "ssh -p ${DB_HOSTS_SSH_PORT[host_idx]}" -av root@${DB_HOSTS[host_idx]}:/var/log/mysql/mysql-slow.log ./mysql-slowquery/mysql-slowquery-log/mysql-slow.log
-# done
+for ((host_idx=0; host_idx<${DB_HOSTS_NUMS}; host_idx++));
+do
+    diff -s deploy-test/mysql-slow.log.example mysql-slowquery/mysql-slowquery-log/mysql-slow.log > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        echo "Success to fetch MySQL slow query log."
+    elif [ $? -eq 1 ]; then
+        echo "Script error detected. Can't fetch slow query log"
+        exit 1
+    fi
+done
 
-# for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
-# do 
-#   # Fetch pprof logs
-#   echo "Fetch pprof log from ${APP_HOSTS[host_idx]}:${APP_HOSTS_SSH_PORT[host_idx]}"
-#   rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]}" -av root@${APP_HOSTS[host_idx]}:/home/root/webapp/cpu.pprof ./pprof/profilefiles/cpu.pprof
-
-# done
+for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
+do 
+    diff -s deploy-test/cpu.pprof.example pprof/profilefiles/cpu.pprof > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        echo "Success to fetch cpu.pprof."
+    elif [ $? -eq 1 ]; then
+        echo "Script error detected. Can't fetch slow query log"
+        exit 1
+    fi
+done
 
 docker compose down deploy-test
