@@ -14,8 +14,10 @@ EXPOSE 22
 
 COPY ./access.log.example /var/log/nginx/access.log
 COPY ./mysql-slow.log.example /var/log/mysql/mysql-slow.log
-COPY ./cpu.pprof.example /home/root/webapp/cpu.pprof
+COPY ./cpu.pprof.example /root/webapp/cpu.pprof
 COPY ./id_rsa/id_rsa.pub /root/authorized_keys
+
+WORKDIR /root
 
 RUN mkdir ~/.ssh
 RUN mv ~/authorized_keys ~/.ssh/authorized_keys
