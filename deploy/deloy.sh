@@ -10,8 +10,8 @@ source ./hosts/hosts.txt
 for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
 do
   echo "Deploy to ${APP_HOSTS[host_idx]}:${APP_HOSTS_SSH_PORT[host_idx]}"
-  rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PUB_KEY[host_idx]}" -av ./webapp/sample-webapp/sample ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:/home/root/webapp/main
-  rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PUB_KEY[host_idx]}" -av ./webapp/sample-webapp/sql/ ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:/home/root/webapp/isucon/sql
+  rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PUB_KEY[host_idx]}" -av ./webapp/sample-webapp/sample ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:/root/webapp/main
+  rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PUB_KEY[host_idx]}" -av ./webapp/sample-webapp/sql/ ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:/root/webapp/isucon/sql
 done
 
 echo "Finish to deploy apps"
