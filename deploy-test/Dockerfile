@@ -24,6 +24,7 @@ RUN mv ~/authorized_keys ~/.ssh/authorized_keys
 RUN chmod 0600 ~/.ssh/authorized_keys
 
 RUN mkdir -p webapp/isucon
+COPY ./sample.example /root/webapp/main
 RUN mkdir -p webapp/isucon/sql
 COPY entrypoint.sh ./
 CMD ["./entrypoint.sh"]
