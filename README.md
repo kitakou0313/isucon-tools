@@ -54,9 +54,6 @@ dockerを用いて実行されるため、インストール不要で使用可�
     - ファイル名を`id_rsa`,`id_rsa.pub`とすることでgitignoreされます
 
 ## ToDo
-- シェルスクリプトのCIテストを書く
-- スクリプト実行時のユーザーも変更可能にする
-    - ユーザー+公開鍵のパス
 
 ## 参考にさせていただいたサイト
 - https://qiita.com/y-vectorfield/items/587d3f3a6eec8f251f3c
