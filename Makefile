@@ -7,7 +7,7 @@ kataribe:
 
 .PHONY: pprof
 pprof:
-	docker compose run --rm pprof bash -c "go tool pprof -png cpu /tmp/profile/cpu.pprof > /tmp/output/cpu.png"
+	docker compose run --rm pprof bash -c "go tool pprof -png /tmp/profile/cpu.pprof > /tmp/output/cpu.png"
 
 .PHONY: pprof-cmd
 pprof-cmd:
