@@ -9,6 +9,10 @@ kataribe:
 pprof:
 	docker compose run --rm pprof bash -c "go tool pprof -png /tmp/profile/cpu.pprof > /tmp/output/cpu.png"
 
+.PHONY: pprof-web
+pprof-web:
+	go tool pprof -http=:8888 ./pprof/profilefiles/isucon ./pprof/profilefiles/cpu.pprof 
+
 .PHONY: pprof-cmd
 pprof-cmd:
 	docker compose run --rm pprof bash -c "go tool pprof /tmp/profile/cpu.pprof"
