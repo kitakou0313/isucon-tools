@@ -4,7 +4,7 @@ set -e
 source ./hosts/hosts.txt
 
 # Init test env
-docker compose down deploy-test
+docker compose down
 
 # Test after-bench.sh
 docker compose up -d deploy-test
