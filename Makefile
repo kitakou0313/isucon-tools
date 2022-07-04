@@ -7,15 +7,15 @@ kataribe:
 
 .PHONY: pprof
 pprof:
-	docker compose run --rm pprof bash -c "go tool pprof -png /tmp/profile/cpu.pprof > /tmp/output/cpu.png"
+	docker compose run --rm pprof bash -c "go tool pprof -png /tmp/profile/fgprof.pprof > /tmp/output/cpu.png"
 
 .PHONY: pprof-web
 pprof-web:
-	go tool pprof -http=:8888 ./pprof/profilefiles/isucon ./pprof/profilefiles/cpu.pprof 
+	go tool pprof -http=:8888 ./pprof/profilefiles/isucon ./pprof/profilefiles/fgprof.pprof 
 
 .PHONY: pprof-cmd
 pprof-cmd:
-	docker compose run --rm pprof bash -c "go tool pprof /tmp/profile/cpu.pprof"
+	docker compose run --rm pprof bash -c "go tool pprof /tmp/profile/fgprof.pprof"
 
 .PHONY: slowquery
 slowquery:
