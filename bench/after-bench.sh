@@ -25,7 +25,7 @@ for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
 do 
   # Fetch pprof logs
   echo "Fetch pprof log from ${APP_HOSTS[host_idx]}:${APP_HOSTS_SSH_PORT[host_idx]}"
-  rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PUB_KEY[host_idx]}" -av ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:/root/webapp/cpu.pprof ./pprof/profilefiles/cpu.pprof
+  rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PUB_KEY[host_idx]}" -av ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:/etc/pprof/fgprof.pprof ./pprof/profilefiles/fgprof.pprof
 
 done
 
