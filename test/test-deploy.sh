@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 source ./hosts/hosts.txt
 
@@ -11,7 +10,7 @@ docker compose up -d deploy-test
 
 sleep 5
 
-bash ./deploy/deloy.sh
+bash ./deploy/deloy.sh > /dev/null 2>&1
 
 for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
 do
@@ -19,7 +18,10 @@ do
     if [ $? -eq 0 ]; then
         echo "Success to deploy."
     elif [ $? -eq 1 ]; then
-        echo "Script error detected. Can't deploy sample web app"
+        echo "Detected web app bin content mismatch"
+        exit 1
+    else
+        echo "Script error detected. Can't diff sample web app"
         exit 1
     fi
 
@@ -27,7 +29,10 @@ do
     if [ $? -eq 0 ]; then
         echo "Success to sql file."
     elif [ $? -eq 1 ]; then
-        echo "Script error detected. Can't deploy sql file."
+        echo "Detected sql content mismatch"
+        exit 1
+    else
+        echo "Script error detected. Can't diff sql file"
         exit 1
     fi
 

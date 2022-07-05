@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 source ./hosts/hosts.txt
 
@@ -11,7 +10,7 @@ docker compose up -d deploy-test
 
 sleep 5
 
-bash ./bench/before-bench.sh
+bash ./bench/before-bench.sh > /dev/null 2>&1
 
 for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
 do

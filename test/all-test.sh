@@ -12,3 +12,7 @@ echo "Success to test deploy.sh."
 
 bash test/test-sync-setting.sh
 echo "Success to test sync-setting.sh."
+
+echo ""
+
+echo "Success to test all scripts"

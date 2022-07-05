@@ -10,7 +10,7 @@ docker compose up -d deploy-test
 
 sleep 5
 
-bash ./deploy/sync-settings.sh
+bash ./deploy/sync-settings.sh > /dev/null 2>&1
 
 
 for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
@@ -19,7 +19,10 @@ do
     if [ $? -eq 0 ]; then
         echo "Success to sync nginx.cnf."
     elif [ $? -eq 1 ]; then
-        echo "Script error detected. to sync nginx.cnf"
+        echo "Detected nginx.conf content mismatch"
+        exit 1
+    else
+        echo "Script error detected. Can't diff nginx.conf"
         exit 1
     fi
 done
@@ -30,7 +33,10 @@ do
     if [ $? -eq 0 ]; then
         echo "Success to sync my.cnf."
     elif [ $? -eq 1 ]; then
-        echo "Script error detected. to sync my.cnf"
+        echo "Detected my.cnf content mismatch"
+        exit 1
+    else
+        echo "Script error detected. Can't diff my.cnf"
         exit 1
     fi
 done
