@@ -46,6 +46,28 @@ func benchStopHandler(c echo.Context) error {
 	)
 }*/
 
+/*
+Requestをファイルにダンプするmiddlewareを追加するコード
+reqDumpPath := "/etc/req-dump"
+	err = os.MkdirAll(reqDumpPath, 0777)
+	if err != nil {
+		e.Logger.Fatalf("failed to create req dump file: %v", err)
+		return
+	}
+
+	fn := filepath.Join(reqDumpPath, "req-dump")
+	f, err := os.Create(fn)
+	if err != nil {
+		e.Logger.Fatalf("failed to create req dump file: %v", err)
+		return
+	}
+
+	e.Use(middleware.BodyDump(func(c echo.Context, reqBody, resBody []byte) {
+		fmt.Fprintf(f, "ReqPath:%v ReqHeader:%v\n", c.Request().RequestURI, c.Request().Header)
+	}))
+
+*/
+
 var stopProfile func() error
 
 // for bench start
