@@ -7,3 +7,4 @@ hosts/hosts.txt
 pprof/profilefiles/fgprof.pprof
 kataribe/webserver-log/access.log
 mysql-slowquery/mysql-slowquery-log/mysql-slow.log
+kataribe/output/kataribe.txt
