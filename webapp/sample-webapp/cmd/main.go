@@ -44,7 +44,13 @@ func benchStopHandler(c echo.Context) error {
 	return c.String(
 		http.StatusOK, "Bench stop",
 	)
-}*/
+}
+
+// for profile
+	e.GET("/api/bench/start", benchStartHandler)
+	e.GET("/api/bench/stop", benchStopHandler)
+
+*/
 
 /*
 Requestをファイルにダンプするmiddlewareを追加するコード
