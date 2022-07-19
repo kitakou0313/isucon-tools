@@ -8,6 +8,12 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
 - 本番環境への接続情報（ホスト名|IPアドレス、`SSH`のポート番号）を`./hosts/hosts.txt`に記述します
     - 本リポジトリ内のスクリプトはこのファイル内の接続情報を用いて通信します
 - 本番環境からwebアプリのコード、初期化用SQLファイルなどを取得し、`./webapp`内に追加します
+    - コマンド例
+        - `scp -rv ${user}@${host}:/etc/nginx/sites-enabled/default.conf ./isucon11-train/configs/`
+        - `scp -rv ${user}@${host}:/home/isucon/webapp/go/* ./webapp/go/`
+        - `scp -rv ${user}@${host}:/home/isucon/webapp/sql/* ./webapp/sql/`
+
+
 
 ## 使用可能なツール群
 
