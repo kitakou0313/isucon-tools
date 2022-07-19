@@ -22,4 +22,6 @@ do
   ssh -p ${DB_HOSTS_SSH_PORT[host_idx]} -i ${DB_HOSTS_SSH_PUB_KEY[host_idx]} ${DB_HOSTS_SSH_USER[host_idx]}@${DB_HOSTS[host_idx]} 'bash -s ' < ./bench/utils/slowquery-backup-clean-log.sh
 done
 
+# curl http://${FRONTEND_HOSTS[0]}/api/bench/start
+
 echo "Finish to backup log and clean log"

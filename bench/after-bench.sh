@@ -8,6 +8,8 @@ echo "Start to fetch log file from localhost"
 
 source ./hosts/hosts.txt
 
+# curl http://${FRONTEND_HOSTS[0]}/api/bench/stop
+
 for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
 do
   echo "Fetch log from ${FRONTEND_HOSTS[host_idx]}:${FRONTEND_HOSTS_SSH_PORT[host_idx]}"
