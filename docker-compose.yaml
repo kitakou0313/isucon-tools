@@ -21,6 +21,11 @@ services:
     volumes:
       - ./pprof/profilefiles:/tmp/profile
       - ./pprof/output:/tmp/output
+
+  alp:
+    build: 
+      context: ./alp
+      dockerfile: ./Dockerfile
   
   deploy-test:
     build:
