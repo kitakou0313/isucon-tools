@@ -26,6 +26,11 @@ services:
     build: 
       context: ./alp
       dockerfile: ./Dockerfile
+
+  pt-query:
+    build: 
+      context: ./pt-query-digest
+      dockerfile: ./Dockerfile
   
   deploy-test:
     build:
