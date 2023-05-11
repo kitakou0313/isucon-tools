@@ -1,6 +1,6 @@
 # Docker image to build sample-webapp
 # Please edit this file to adapt language.
-FROM golang:1.18
+FROM golang:1.20.4
 
 WORKDIR /app
 
