@@ -10,7 +10,8 @@ source ./hosts/hosts.txt
 for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
 do
   echo "Send configs to ${FRONTEND_HOSTS[host_idx]}:${FRONTEND_HOSTS_SSH_PORT[host_idx]}"
-  rsync -e "ssh -p ${FRONTEND_HOSTS_SSH_PORT[host_idx]} -i ${FRONTEND_HOSTS_SSH_PRIVATE_KEY[host_idx]}" -av ./configs/nginx.conf ${FRONTEND_HOSTS_SSH_USER[host_idx]}@${FRONTEND_HOSTS[host_idx]}:/etc/nginx/nginx.conf
+  rsync -e "ssh -p ${FRONTEND_HOSTS_SSH_PORT[host_idx]} -i ${FRONTEND_HOSTS_SSH_PRIVATE_KEY[host_idx]}" \
+  -av ./configs/nginx.conf ${FRONTEND_HOSTS_SSH_USER[host_idx]}@${FRONTEND_HOSTS[host_idx]}:/etc/nginx/nginx.conf
 done
 
 for ((host_idx=0; host_idx<${DB_HOSTS_NUMS}; host_idx++));
