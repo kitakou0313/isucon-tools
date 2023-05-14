@@ -13,6 +13,12 @@ pprof:
 pprof-web:
 	go tool pprof -http=:8888 ./pprof/profilefiles/isucon ./pprof/profilefiles/fgprof.pprof 
 
+# Not working!
+.PHONY: pprof-web-docker
+pprof-web-docker:
+	docker compose run --rm pprof bash -c "go tool pprof -http=:8888 /tmp/profile/fgprof.pprof" 
+
+
 .PHONY: pprof-cmd
 pprof-cmd:
 	docker compose run --rm pprof bash -c "go tool pprof /tmp/profile/fgprof.pprof"
