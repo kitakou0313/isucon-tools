@@ -21,6 +21,9 @@ services:
     volumes:
       - ./pprof/profilefiles:/tmp/profile
       - ./pprof/output:/tmp/output
+    expose:
+      - "8888"
+    network_mode: host
 
   alp:
     build: 
