@@ -29,6 +29,11 @@ services:
     build: 
       context: ./alp
       dockerfile: ./Dockerfile
+  
+  ansible:
+    build: 
+      context: ./ansible
+      dockerfile: ./Dockerfile
 
   pt-query:
     build: 
