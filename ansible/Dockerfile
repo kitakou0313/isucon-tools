@@ -5,3 +5,4 @@ WORKDIR /workdir
 RUN apt-get update
 RUN apt-get install -y python3 python3-pip
 RUN python3 -m pip install --user ansible
+ENV PATH $PATH:/root/.local/lib/python3.10/site-packages
