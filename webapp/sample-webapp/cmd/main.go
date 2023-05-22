@@ -74,6 +74,17 @@ reqDumpPath := "/etc/req-dump"
 
 */
 
+/*
+再起動試験でFailしないようにPingで疎通が取れるまでループする
+for {
+		err := db.Ping()
+		if err == nil {
+			break
+		}
+		time.Sleep(time.Second * 2)
+	}
+*/
+
 var stopProfile func() error
 
 // for bench start
