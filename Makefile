@@ -3,7 +3,11 @@ build:
 
 .PHONY: kataribe
 kataribe:
-	docker compose run --rm kataribe bash -c "cat /logs/access.log | kataribe" > ./kataribe/output/kataribe.txt
+	docker compose run --rm alp bash -c "cat /logs/access.log | kataribe" > ./kataribe/output/kataribe.txt
+
+.PHONY: alp
+alp:
+	docker compose run --rm alp bash -c 'alp -c ./config.yaml regexp' > ./alp/output/alp.txt
 
 .PHONY: pprof
 pprof:

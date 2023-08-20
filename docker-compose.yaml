@@ -29,6 +29,9 @@ services:
     build: 
       context: ./alp
       dockerfile: ./Dockerfile
+    volumes:
+      - ./alp/config:/workdir
+      - ./alp/log:/log
   
   ansible:
     build: 

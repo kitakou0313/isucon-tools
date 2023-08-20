@@ -1,0 +1,15 @@
+---
+file: /log/access.log 
+sort: sum
+reverse: true
+matching_groups:
+  - '^/sample/path/'
+filters:
+regexp:
+  pattern: 
+  uri_subexp:
+  method_subexp:
+  time_subexp:
+  response_time_subexp:
+  body_bytes_subexp:
+  status_subexp:
