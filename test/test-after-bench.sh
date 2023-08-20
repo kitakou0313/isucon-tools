@@ -14,7 +14,7 @@ bash ./bench/after-bench.sh > /dev/null 2>&1
 
 for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
 do
-    diff -s deploy-test/access.log.example kataribe/webserver-log/access.log > /dev/null 2>&1
+    diff -s deploy-test/access.log.example alp/log/access.log > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         echo "Success to fetch access.log"
     elif [ $? -eq 1 ]; then
