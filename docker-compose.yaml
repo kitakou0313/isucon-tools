@@ -10,7 +10,7 @@ services:
       - ./kataribe/webserver-log:/logs
 
   slowquery:
-    image: mysql:8.0-debian
+    image: mysql:8.0.34-debian
     volumes:
       - ./mysql-slowquery/mysql-slowquery-log:/var/log/slowquery-log
 
