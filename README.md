@@ -20,10 +20,16 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
 ### 解析用ツール
 dockerを用いて実行されるため、インストール不要で使用可能です。よく使う形式を`make`コマンド内でまとめていますが、直接`docker compose run...`で実行することで任意のオプションを使用できます。
 
-- kataribe
-    - https://github.com/matsuu/kataribe
+- alp
+    - https://github.com/tkuchiki/alp
     - nginxなどのwebサーバーのログから実行時間を解析
     - 実行時間を占めているエンドポイントの発見などに使用可能
+    - nginxログでのメトリクス
+        - [request_time](https://nginx.org/en/docs/http/ngx_http_core_module.html#var_request_time:~:text=or%20%E2%80%9CPOST%E2%80%9D-,%24request_time,-request%20processing%20time)
+            - clientからの最初の1Byteを受け取ってからリクエストを処理するのにかかった時間
+        - [upstream_response_time](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#:~:text=%24upstream_response_time)
+            - proxy先のサーバーからレスポンスを受信するまでにかかった時間
+            - いつから記録するのかは不明
 - mysqlslowdump
     - MySQLのスローログを解析
     - 実行時間が長いクエリを発見できる
@@ -32,7 +38,7 @@ dockerを用いて実行されるため、インストール不要で使用可�
     - DBの種類（mariaDBなど）によっては上手く実行できない場合があるので適宜`./docker-compose.yaml`内の`slowquery`サービスのイメージを差し替えてください
 - pprof(fgprof)
     - Golang用のパフォーマンス分析ツール
-    - 公式のpprofと異なり、ネットワークでレスポンスを待っている時間も記録される
+    - 公式のpprofと異なり、File I/OやNetwork I/O，Mutexによるロックの待ちでのスタックトレースも記録される
         - https://github.com/felixge/fgprof
     - `net/http/pprof`と同様の手順でプロファイルできるが、チーム全員と共有することを考えファイルに保存する形式を取っている
         - `webapp/sample-webapp/cmd/main.go`にサンプルあり
