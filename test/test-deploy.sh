@@ -14,7 +14,7 @@ bash ./deploy/deloy.sh > /dev/null 2>&1
 
 for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
 do
-    ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]} ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]} 'cat /root/webapp/main' | diff -s - ./webapp/sample-webapp/sample
+    ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]} ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]} 'cat /root/webapp/go/.gitkeep' | diff -s - ./webapp/go/.gitkeep
     if [ $? -eq 0 ]; then
         echo "Success to deploy."
     elif [ $? -eq 1 ]; then
@@ -25,7 +25,7 @@ do
         exit 1
     fi
 
-    ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]} ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]} 'cat /root/webapp/isucon/sql/0_schema.sql' | diff -s - ./webapp/sample-webapp/sql/0_schema.sql
+    ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]} ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]} 'cat /root/webapp/sql/.gitkeep' | diff -s - ./webapp/sql/.gitkeep
     if [ $? -eq 0 ]; then
         echo "Success to sql file."
     elif [ $? -eq 1 ]; then

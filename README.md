@@ -41,7 +41,7 @@ dockerを用いて実行されるため、インストール不要で使用可�
     - 公式のpprofと異なり、File I/OやNetwork I/O，Mutexによるロックの待ちでのスタックトレースも記録される
         - https://github.com/felixge/fgprof
     - `net/http/pprof`と同様の手順でプロファイルできるが、チーム全員と共有することを考えファイルに保存する形式を取っている
-        - `webapp/sample-webapp/cmd/main.go`にサンプルあり
+        - `sample-webapp/cmd/main.go`にサンプルあり
     - web view用のコマンド使用時は`graphviz`をローカルにインストールしてください
 
 ### デプロイ、ベンチ関連のツール
