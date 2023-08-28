@@ -9,9 +9,9 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
     - 本リポジトリ内のスクリプトはこのファイル内の接続情報を用いて通信します
 - 本番環境からwebアプリのコード、初期化用SQLファイルなどを取得し、`./webapp`内に追加します
     - コマンド例
-        - `scp -rv ${user}@${host}:/etc/nginx ./isucon11-train/configs/nginx`
-        - `scp -rv ${user}@${host}:/home/isucon/webapp/go/* ./webapp/go/`
-        - `scp -rv ${user}@${host}:/home/isucon/webapp/sql/* ./webapp/sql/`
+        - `scp -rv ${user}@${host}:/etc/nginx ./isucon11-train/configs/`
+        - `scp -rv ${user}@${host}:/etc/mysql ./isucon11-train/configs/`
+        - `scp -rv ${user}@${host}:/home/isucon/webapp/* ./webapp/`
 
 
 
