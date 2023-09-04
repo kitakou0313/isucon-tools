@@ -78,6 +78,8 @@ dockerを用いて実行されるため、インストール不要で使用可�
 - isuconテンプレを作る
     - index作るクエリ
     - conf系を全部沈める実装にする
+    - `sudo`でconfigのコピーまで自動化する
+    - 複数ホスト対応する
 
 ## 参考にさせていただいたサイト
 - https://qiita.com/y-vectorfield/items/587d3f3a6eec8f251f3c
