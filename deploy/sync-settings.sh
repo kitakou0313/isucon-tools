@@ -30,4 +30,18 @@ done
 #   rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]}" -av $(file path in local) ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:$(file path in remote)
 # done
 
+# コピー
+
+for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
+do
+  ssh -t -p ${FRONTEND_HOSTS_SSH_PORT[host_idx]} -i ${FRONTEND_HOSTS_SSH_PRIVATE_KEY[host_idx]} \
+  ${FRONTEND_HOSTS_SSH_USER[host_idx]}@${FRONTEND_HOSTS[host_idx]} 'sudo cp -r /tmp/nginx /etc'
+done
+
+for ((host_idx=0; host_idx<${DB_HOSTS_NUMS}; host_idx++));
+do
+  ssh -t -p ${DB_HOSTS_SSH_PORT[host_idx]} -i ${DB_HOSTS_SSH_PRIVATE_KEY[host_idx]} \
+  ${DB_HOSTS_SSH_USER[host_idx]}@${DB_HOSTS[host_idx]} 'sudo cp -r /tmp/mysql /etc'
+done
+
 echo "Finish to sync config files"
