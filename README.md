@@ -14,6 +14,7 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
         - `scp -rv ${user}@${host}:/home/isucon/webapp/* ./webapp`
 - 各スクリプトのデプロイ先のパスなどを修正します
     - `deploy/deloy.sh`
+        - restartするservice名も変更
     - 
 
 
