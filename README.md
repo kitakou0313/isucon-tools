@@ -16,6 +16,8 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
     - `deploy/deloy.sh`
         - restartするservice名も変更
     - Golangのprofileファイルを保存する設定を追加
+- SSHユーザーをログディレクトリにアクセスできるグループに追加
+    - `sudo usermod -aG adm "$USERNAME"`
 
 
 
