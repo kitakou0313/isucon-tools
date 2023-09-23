@@ -18,6 +18,7 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
     - Golangのprofileファイルを保存する設定を追加
 - SSHユーザーをログディレクトリにアクセスできるグループに追加
     - `sudo usermod -aG adm "$USERNAME"`
+    - `sudo usermod -aG mysql "$USERNAME"`
 
 
 
