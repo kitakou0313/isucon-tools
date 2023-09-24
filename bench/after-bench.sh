@@ -12,6 +12,10 @@ source ./hosts/hosts.txt
 
 for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
 do
+  if [ -f ./alp/log/access.log ]; then 
+    cp ./alp/log/access.log ./alp/log/access.log.bk.$(date "+%Y%m%d_%H%M%S")
+  fi
+
   echo "Fetch log from ${FRONTEND_HOSTS[host_idx]}:${FRONTEND_HOSTS_SSH_PORT[host_idx]}"
   rsync -e "ssh -p ${FRONTEND_HOSTS_SSH_PORT[host_idx]} -i ${FRONTEND_HOSTS_SSH_PRIVATE_KEY[host_idx]}" \
   -av ${FRONTEND_HOSTS_SSH_USER[host_idx]}@${FRONTEND_HOSTS[host_idx]}:/var/log/nginx/access.log ./alp/log/access.log
@@ -19,6 +23,9 @@ done
 
 for ((host_idx=0; host_idx<${DB_HOSTS_NUMS}; host_idx++));
 do
+  if [ -f ./mysql-slowquery/mysql-slowquery-log/mysql-slow.log ]; then 
+    cp ./mysql-slowquery/mysql-slowquery-log/mysql-slow.log ./mysql-slowquery/mysql-slowquery-log/mysql-slow.log.bk.$(date "+%Y%m%d_%H%M%S")
+  fi
   # Fetch mysql slowquery-log
   echo "Fetch mysql slow query log from ${DB_HOSTS[host_idx]}:${DB_HOSTS_SSH_PORT[host_idx]}"
   rsync -e "ssh -p ${DB_HOSTS_SSH_PORT[host_idx]} -i ${DB_HOSTS_SSH_PRIVATE_KEY[host_idx]}" \
@@ -27,6 +34,9 @@ done
 
 for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
 do 
+  if [ -f ./pprof/profilefiles/fgprof.pprof ]; then 
+    cp ./pprof/profilefiles/fgprof.pprof ./pprof/profilefiles/fgprof.pprof.bk.$(date "+%Y%m%d_%H%M%S")
+  fi
   # Fetch pprof logs
   echo "Fetch pprof log from ${APP_HOSTS[host_idx]}:${APP_HOSTS_SSH_PORT[host_idx]}"
   rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]}" \

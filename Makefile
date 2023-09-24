@@ -7,7 +7,7 @@ kataribe:
 
 .PHONY: alp
 alp:
-	docker compose run --rm alp bash -c 'alp -c ./config.yaml regexp' > ./alp/output/alp.txt
+	docker compose run --rm alp bash -c 'cat /log/access.log | alp -c ./config.yaml regexp' > ./alp/output/alp.txt
 
 .PHONY: pprof
 pprof:

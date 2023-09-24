@@ -5,8 +5,11 @@ deploy-test/id_rsa/id_rsa.pub
 
 hosts/hosts.txt
 pprof/profilefiles/fgprof.pprof
+pprof/profilefiles/fgprof.pprof.*
 kataribe/webserver-log/access.log
 alp/log/access.log
+alp/log/access.log.bk.*
 alp/output/alp.txt
 mysql-slowquery/mysql-slowquery-log/mysql-slow.log
+mysql-slowquery/mysql-slowquery-log/mysql-slow.log.*
 kataribe/output/kataribe.txt

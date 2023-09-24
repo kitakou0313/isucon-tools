@@ -1,5 +1,5 @@
 ---
-file: /log/access.log 
+# file: /log/access.log 
 sort: sum
 reverse: true
 matching_groups:
