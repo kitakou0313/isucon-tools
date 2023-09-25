@@ -29,7 +29,7 @@ pprof-cmd:
 
 .PHONY: slowquery
 slowquery:
-	docker compose run --rm slowquery mysqldumpslow -s t -t 5 /var/log/slowquery-log/mysql-slow.log
+	docker compose run --rm slowquery mysqldumpslow -s t -t 5 ./mysql-slowquery/mysql-slowquery-log/mysql-slow.log
 
 .PHONY: ansible
 ansible:

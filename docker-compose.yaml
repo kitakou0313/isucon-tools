@@ -11,8 +11,9 @@ services:
 
   slowquery:
     image: mysql:8.0.34-debian
+    working_dir: /workdir 
     volumes:
-      - ./mysql-slowquery/mysql-slowquery-log:/var/log/slowquery-log
+      - ./mysql-slowquery:/workdir/mysql-slowquery
 
   pprof:
     build: 
