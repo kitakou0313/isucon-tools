@@ -35,4 +35,27 @@ if err := db.SelectContext(
 ); err != nil {
     return nil, fmt.Errorf("", err)
 }
+
+var Row struct {
+	ID int `db:"id"`
+}
+
+// Bulk insert
+var rowsToAdd []Row // insertしたい行を含むstruct
+
+for idx, content := range ${insertしたいデータ} {
+    rowsToAdd = append(rowsToAdd, Row{
+    })
+}
+
+if _, err := db.ExecContext(
+    ctx,
+    "INSERT INTO ${table} (`columnName1`, `columnName2) VALUES (:${tag_name}, :${tag_name})",
+    playlistSongRowsToAdd,
+); err != nil {
+    return fmt.Errorf(
+        "error Batch Insert:%w", err,
+    )
+}
+return nil
 ```
