@@ -59,4 +59,42 @@ if _, err := db.NamedExecContext(
     )
 }
 return nil
+
+// インメモリキャッシュ
+type CacheRow struct {
+	sync.RWMutex
+	data map[string]*Row
+}
+
+func NewCacheRow() *CacheRow {
+	return &cacheRow{
+		data: make(map[string]*Row),
+	}
+}
+
+func (c *CacheRow) Set(k string, v *Row) {
+	c.Lock()
+    defer c.Unlock()
+	c.data[k] = v
+}
+
+func (c *CacheRow) Get(k string) *Row {
+	c.RLock()
+    defer c.RUnlock()
+	return c.data[k]
+}
+
+
+func (c *CacheRow) Remove(k string) {
+	c.RLock()
+	defer c.RUnlock()
+	delete(c.data, k)
+}
+
+func (c *CacheRow) IsIn(k string) bool {
+	c.RLock()
+    defer c.RUnlock()
+    _, isIn := c.data[k]
+	return isIn
+}
 ```
