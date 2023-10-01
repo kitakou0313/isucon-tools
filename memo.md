@@ -48,7 +48,8 @@ for idx, content := range ${insertしたいデータ} {
     })
 }
 
-if _, err := db.ExecContext(
+// NamedExecにしないといけないっぽい
+if _, err := db.NamedExecContext(
     ctx,
     "INSERT INTO ${table} (`columnName1`, `columnName2) VALUES (:${tag_name}, :${tag_name})",
     playlistSongRowsToAdd,
