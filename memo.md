@@ -91,10 +91,11 @@ func (c *CacheRow) Remove(k string) {
 	delete(c.data, k)
 }
 
-func (c *CacheRow) IsIn(k string) bool {
+// 同一Rock内で実施しないと不整合が置き得る
+func (c *CacheRow) GetAndIsIn(k string) (*CacheRow, bool) {
 	c.RLock()
     defer c.RUnlock()
-    _, isIn := c.data[k]
-	return isIn
+    data, isIn := c.data[k]
+	return data, isIn
 }
 ```
