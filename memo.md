@@ -61,6 +61,7 @@ if _, err := db.NamedExecContext(
 return nil
 
 // インメモリキャッシュ
+// ベンチ前の初期化処理を忘れない
 type CacheRow struct {
 	sync.RWMutex
 	data map[string]*Row
