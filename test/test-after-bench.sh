@@ -6,7 +6,7 @@ source ./hosts/hosts.txt
 docker compose down
 
 # Test after-bench.sh
-docker compose up -d deploy-test
+docker compose up -d deploy-test-1 deploy-test-2
 
 sleep 5
 
@@ -14,7 +14,7 @@ bash ./bench/after-bench.sh > /dev/null 2>&1
 
 for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
 do
-    diff -s deploy-test/access.log.example alp/log/access.log > /dev/null 2>&1
+    diff -s deploy-test/access.log.example alp/log/${FRONTEND_HOSTS_PATH[host_idx]}/access.log > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         echo "Success to fetch access.log"
     elif [ $? -eq 1 ]; then
@@ -28,7 +28,7 @@ done
 
 for ((host_idx=0; host_idx<${DB_HOSTS_NUMS}; host_idx++));
 do
-    diff -s deploy-test/mysql-slow.log.example mysql-slowquery/mysql-slowquery-log/mysql-slow.log > /dev/null 2>&1
+    diff -s deploy-test/mysql-slow.log.example mysql-slowquery/mysql-slowquery-log/${DB_HOSTS_PATH[host_idx]}/mysql-slow.log > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         echo "Success to fetch MySQL slow query log."
     elif [ $? -eq 1 ]; then
@@ -42,7 +42,7 @@ done
 
 for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
 do 
-    diff -s deploy-test/fgprof.pprof.example pprof/profilefiles/fgprof.pprof > /dev/null 2>&1
+    diff -s deploy-test/fgprof.pprof.example pprof/profilefiles/${APP_HOSTS_PATH}/fgprof.pprof > /dev/null 2>&1
     
     if [ $? -eq 0 ]; then
         echo "Success to fetch fgprof.pprof."

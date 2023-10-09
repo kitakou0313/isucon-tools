@@ -6,7 +6,7 @@ source ./hosts/hosts.txt
 docker compose down
 
 # Test after-bench.sh
-docker compose up -d deploy-test
+docker compose up -d deploy-test-1 deploy-test-2
 
 sleep 5
 
