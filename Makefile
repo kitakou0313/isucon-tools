@@ -7,7 +7,7 @@ kataribe:
 
 .PHONY: alp
 alp:
-	docker compose run --rm alp bash -c 'cat ./alp/log/access.log | alp -c ./alp/config/config.yaml regexp' > ./alp/output/alp.txt
+	docker compose run --rm alp bash -c 'cat ./alp/log/host1/access.log | alp -c ./alp/config/config.yaml regexp' > ./alp/output/alp.txt
 
 .PHONY: pprof
 pprof:
@@ -15,7 +15,7 @@ pprof:
 
 .PHONY: pprof-web
 pprof-web:
-	go tool pprof -http=:8888 ./pprof/profilefiles/isucon ./pprof/profilefiles/fgprof.pprof 
+	go tool pprof -http=:8888 ./pprof/profilefiles/isucon ./pprof/profilefiles/host1/fgprof.pprof 
 
 # Working on only Linux host!
 .PHONY: pprof-web-docker
@@ -29,7 +29,7 @@ pprof-cmd:
 
 .PHONY: slowquery
 slowquery:
-	docker compose run --rm slowquery mysqldumpslow -s t -t 5 ./mysql-slowquery/mysql-slowquery-log/mysql-slow.log
+	docker compose run --rm slowquery mysqldumpslow -s t -t 5 ./mysql-slowquery/mysql-slowquery-log/host1/mysql-slow.log
 
 .PHONY: ansible
 ansible:
