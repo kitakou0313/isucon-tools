@@ -13,7 +13,7 @@ do
   rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]}" \
   -av ./webapp/ ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:/root/webapp
 
-  ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]} \
+  ssh -t -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]} \
   ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]} \
   "sudo sytemctl restart hogehoge"
 done

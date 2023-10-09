@@ -16,7 +16,7 @@ do
   rsync -e "ssh -p ${FRONTEND_HOSTS_SSH_PORT[host_idx]} -i ${FRONTEND_HOSTS_SSH_PRIVATE_KEY[host_idx]}" \
   -av ./bench/utils ${FRONTEND_HOSTS_SSH_USER[host_idx]}@${FRONTEND_HOSTS[host_idx]}:/home/${FRONTEND_HOSTS_SSH_USER[host_idx]}
 
-  ssh -p ${FRONTEND_HOSTS_SSH_PORT[host_idx]} -i ${FRONTEND_HOSTS_SSH_PRIVATE_KEY[host_idx]} \
+  ssh -t -p ${FRONTEND_HOSTS_SSH_PORT[host_idx]} -i ${FRONTEND_HOSTS_SSH_PRIVATE_KEY[host_idx]} \
   ${FRONTEND_HOSTS_SSH_USER[host_idx]}@${FRONTEND_HOSTS[host_idx]} \
   "sudo bash /home/${FRONTEND_HOSTS_SSH_USER[host_idx]}/utils/nginx-backup-clean-log.sh"
 done
@@ -29,7 +29,7 @@ do
   rsync -e "ssh -p ${DB_HOSTS_SSH_PORT[host_idx]} -i ${DB_HOSTS_SSH_PRIVATE_KEY[host_idx]}" \
   -av ./bench/utils ${DB_HOSTS_SSH_USER[host_idx]}@${DB_HOSTS[host_idx]}:/home/${DB_HOSTS_SSH_USER[host_idx]}
 
-  ssh -p ${DB_HOSTS_SSH_PORT[host_idx]} -i ${DB_HOSTS_SSH_PRIVATE_KEY[host_idx]} \
+  ssh -t -p ${DB_HOSTS_SSH_PORT[host_idx]} -i ${DB_HOSTS_SSH_PRIVATE_KEY[host_idx]} \
   ${DB_HOSTS_SSH_USER[host_idx]}@${DB_HOSTS[host_idx]} \
   "sudo bash /home/${DB_HOSTS_SSH_USER[host_idx]}/utils/slowquery-backup-clean-log.sh"
 done
