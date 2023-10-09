@@ -43,9 +43,16 @@ services:
       context: ./pt-query-digest
       dockerfile: ./Dockerfile
   
-  deploy-test:
+  deploy-test-1:
     build:
       context: ./deploy-test
       dockerfile: ./Dockerfile
     ports:
       - "2222:22"
+  
+  deploy-test-2:
+    build:
+      context: ./deploy-test
+      dockerfile: ./Dockerfile
+    ports:
+      - "2223:22"
