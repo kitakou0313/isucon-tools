@@ -16,6 +16,10 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
     - `deploy/deloy.sh`
         - restartするservice名も変更
     - Golangのprofileファイルを保存する設定を追加
+- GoのVSC Extensionがエラーになる場合は，下記コマンドを実行
+    - `go work init` 
+    - `go work use "$GO_WEBAPP_PATH"`
+- `sudo`を`ssh`から実行するための設定を導入
 - SSHユーザーをログディレクトリにアクセスできるグループに追加
     - `sudo usermod -aG adm "$USERNAME"`
     - `sudo usermod -aG mysql "$USERNAME"`
