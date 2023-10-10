@@ -99,4 +99,13 @@ func (c *CacheRow) GetAndIsIn(k string) (*CacheRow, bool) {
     data, isIn := c.data[k]
 	return data, isIn
 }
+
+// DBに接続できるまでAPIサーバーを起動させない
+for {
+    err := db.Ping()
+    if err == nil {
+        break
+    }
+    time.Sleep(time.Second * 2)
+}
 ```
