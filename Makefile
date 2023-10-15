@@ -38,4 +38,4 @@ ansible:
 
 .PHONY: up-test-server
 up-test-server:
-	docker compose up -d deploy-test
+	docker compose up -d deploy-test-1 deploy-test-2
