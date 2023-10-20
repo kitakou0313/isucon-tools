@@ -15,7 +15,7 @@ do
 
   ssh -t -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]} \
   ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]} \
-  "sudo sytemctl restart hogehoge"
+  "sudo systemctl restart hogehoge"
 done
 
 echo "Finish to deploy apps"
