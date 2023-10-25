@@ -89,7 +89,7 @@ var stopProfile func() error
 
 // for bench start
 func startProfile() error {
-	profilePath := "/etc/pprof"
+	profilePath := "/tmp/pprof"
 
 	err := os.MkdirAll(profilePath, 0777)
 	if err != nil {

@@ -58,7 +58,7 @@ do
   # Fetch pprof logs
   echo "Fetch pprof log from ${APP_HOSTS[host_idx]}:${APP_HOSTS_SSH_PORT[host_idx]}"
   rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]}" \
-  -av ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:/etc/pprof/fgprof.pprof "${LOG_FILE_NAME}"
+  -av ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:/tmp/pprof/fgprof.pprof "${LOG_FILE_NAME}"
 
 done
 
