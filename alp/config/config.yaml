@@ -3,7 +3,7 @@
 sort: sum
 reverse: true
 matching_groups:
-  - '^/sample/path/'
+  - '^/sample/.*/path$'
 filters:
 regexp:
   pattern: 
