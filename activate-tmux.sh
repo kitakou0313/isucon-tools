@@ -3,6 +3,8 @@ set -e
 
 source ./hosts/hosts.txt
 
+tmux new -s "local" -d
+
 for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
 do
   tmux new -s "front-${host_idx}" -d
