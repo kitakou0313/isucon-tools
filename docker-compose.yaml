@@ -38,7 +38,7 @@ services:
       context: ./ansible
       dockerfile: ./Dockerfile
 
-  pt-query:
+  pt-query-digest:
     build: 
       context: ./pt-query-digest
       dockerfile: ./Dockerfile

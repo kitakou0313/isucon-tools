@@ -31,9 +31,9 @@ pprof-cmd:
 slowquery:
 	docker compose run --rm slowquery mysqldumpslow -s t -t 5 ./mysql-slowquery/mysql-slowquery-log/host1/mysql-slow.log
 
-.PHONY: pt-query
-pt-query:
-	docker compose run --rm pt-query pt-query-digest ./mysql-slowquery/mysql-slowquery-log/host1/mysql-slow.log
+.PHONY: pt-query-digest
+pt-query-digest:
+	docker compose run --rm pt-query-digest pt-query-digest ./mysql-slowquery/mysql-slowquery-log/host1/mysql-slow.log
 
 
 .PHONY: ansible
