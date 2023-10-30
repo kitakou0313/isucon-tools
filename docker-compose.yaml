@@ -42,6 +42,8 @@ services:
     build: 
       context: ./pt-query-digest
       dockerfile: ./Dockerfile
+    volumes:
+      - ./mysql-slowquery:/workdir/mysql-slowquery
   
   deploy-test-1:
     build:
