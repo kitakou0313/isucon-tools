@@ -48,6 +48,14 @@ for idx, content := range ${insertしたいデータ} {
     })
 }
 
+// map[string]interface{}のsliceでも可
+mapsToAdd := []map[string]interface{}{}
+for idx, content := range ${insertしたいデータ} {
+    mapsToAdd = append(mapsToAdd, map[string]interface{}{
+			"hoge": i,
+	})
+}
+
 // NamedExecにしないといけないっぽい
 if _, err := db.NamedExecContext(
     ctx,
