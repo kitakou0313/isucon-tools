@@ -17,7 +17,11 @@ alp/log/access.log
 alp/log/access.log.bk.*
 alp/log/*/access.log
 alp/log/*/access.log.bk.*
-alp/output/alp.txt
+alp/output/*
+!alp/output/.gitkeep
+
+pt-query-digest/output/*
+!pt-query-digest/output/.gitkeep
 
 mysql-slowquery/mysql-slowquery-log/mysql-slow.log
 mysql-slowquery/mysql-slowquery-log/mysql-slow.log.*
