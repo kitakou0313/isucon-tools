@@ -11,6 +11,10 @@ CREATE INDEX  ON `` (``,``);
 
 # 行数チェック
 select table_name, table_rows from information_schema.TABLES where table_schema = '$DB_NANE';
+
+# 既存テーブルに列を追加
+-- submissionsにcourse_id列を追加
+ALTER TABLE fp ADD COLUMN date date NOT NULL;
 ```
 
 ### Golang
