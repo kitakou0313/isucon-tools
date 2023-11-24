@@ -26,8 +26,8 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
 - ファイルのバックアップ
     - アプリケーション
     - 設定ファイル
-    - `tar cvf mysql.tar /etc/mysql`
-    - `tar xvf mysql.tar -C /`
+    - `tar cvfp mysql.tar /etc/mysql`
+    - `tar xvfp mysql.tar -C /`
 - ベンチ用設定導入
 
 
