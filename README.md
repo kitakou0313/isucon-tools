@@ -23,6 +23,12 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
 - SSHユーザーをログディレクトリにアクセスできるグループに追加
     - `sudo usermod -aG adm "$USERNAME"`
     - `sudo usermod -aG mysql "$USERNAME"`
+- ファイルのバックアップ
+    - アプリケーション
+    - 設定ファイル
+    - `tar cvf mysql.tar /etc/mysql`
+    - `tar xvf mysql.tar -C /`
+- ベンチ用設定導入
 
 
 
