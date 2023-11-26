@@ -27,3 +27,9 @@ mysql-slowquery/mysql-slowquery-log/mysql-slow.log
 mysql-slowquery/mysql-slowquery-log/mysql-slow.log.*
 mysql-slowquery/mysql-slowquery-log/*/mysql-slow.log
 mysql-slowquery/mysql-slowquery-log/*/mysql-slow.log.*
+
+configs/mysql/*
+!configs/mysql/.gitkeep
+
+configs/nginx/*
+!configs/nginx/.gitkeep
