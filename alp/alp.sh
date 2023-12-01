@@ -14,10 +14,14 @@ do
 
   for LOG_FILE_NAME in ${LOG_DIR}/access.log.*
   do
-    TIMESTAMP=$(echo "${LOG_FILE_NAME}" | sed -E 's/[0-9]{8}\_[0-9]{6}/\1/g')
+    # TIMESTAMP=$(echo "${LOG_FILE_NAME}" | sed -e "s/\([0-9]\{8\}_[0-9]\{6\}\)\$/\1/g")
+    TIMESTAMP=$(echo "${LOG_FILE_NAME}" | sed -e "s/.*\.\([0-9]\{8\}_[0-9]\{6\}\)/\1/g")
     OUTPUT_FILE_NAME="${OUTPUT_DIR}/alp.txt.${TIMESTAMP}"
 
-    docker compose run --rm alp bash -c "cat ${LOG_FILE_NAME} | alp -c ./alp/config/config.yaml regexp" > ${OUTPUT_FILE_NAME}
+    if [ ! -f "${OUTPUT_FILE_NAME}" ]; then
+      docker compose run --rm alp bash -c "cat ${LOG_FILE_NAME} | alp -c ./alp/config/config.yaml regexp" > ${OUTPUT_FILE_NAME}
+    fi
+
   done
 
 done
