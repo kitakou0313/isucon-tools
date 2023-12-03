@@ -7,7 +7,7 @@ kataribe:
 
 .PHONY: alp
 alp:
-	docker compose run --rm alp bash -c 'cat ./alp/log/host1/access.log | alp -c ./alp/config/config.yaml regexp' > ./alp/output/alp.txt
+	bash alp/alp.sh
 
 .PHONY: pprof
 pprof:
@@ -33,8 +33,7 @@ slowquery:
 
 .PHONY: pt-query-digest
 pt-query-digest:
-	docker compose run --rm pt-query-digest pt-query-digest ./mysql-slowquery/mysql-slowquery-log/host1/mysql-slow.log
-
+	bash pt-query-digest/pt-query-digest.sh 
 
 .PHONY: ansible
 ansible:
