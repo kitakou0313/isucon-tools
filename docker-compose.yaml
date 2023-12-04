@@ -44,7 +44,21 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./mysql-slowquery:/workdir/mysql-slowquery
-  
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    volumes:
+      - prom_data:/prometheus
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
   deploy-test-1:
     build:
       context: ./deploy-test
@@ -58,3 +72,6 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "2223:22"
+
+volumes:
+  prom_data:
