@@ -58,6 +58,9 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./prometheus-grafana/grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./prometheus-grafana/grafana/dashboard.yaml:/var/lib/grafana/dashboards
 
   deploy-test-1:
     build:
