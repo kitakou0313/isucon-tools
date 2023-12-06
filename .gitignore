@@ -20,6 +20,8 @@ alp/log/*/access.log.*
 alp/output/*
 !alp/output/.gitkeep
 
+ansible/production/hosts.yaml
+
 pt-query-digest/output/*
 !pt-query-digest/output/.gitkeep
 

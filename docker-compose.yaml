@@ -37,6 +37,8 @@ services:
     build: 
       context: ./ansible
       dockerfile: ./Dockerfile
+    volumes:
+      - ./:/workdir
 
   pt-query-digest:
     build: 
