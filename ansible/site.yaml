@@ -1,0 +1,6 @@
+---
+
+- name: Ping all hosts
+  hosts: all
+  roles:
+    - common

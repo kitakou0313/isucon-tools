@@ -1,5 +1,5 @@
 build:
-	docker compose build kataribe slowquery pprof
+	docker compose build alp pt-query-digest pprof ansible
 
 .PHONY: kataribe
 kataribe:
