@@ -21,6 +21,9 @@ alp/output/*
 !alp/output/.gitkeep
 
 ansible/production/hosts.yaml
+ansible/host_vars/*
+!ansible/host_vars/host1.example
+ansible/hosts
 
 pt-query-digest/output/*
 !pt-query-digest/output/.gitkeep
