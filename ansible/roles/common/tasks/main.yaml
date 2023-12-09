@@ -1,3 +1,2 @@
 ---
-- name: Ping servers
-  ansible.builtin.ping:
+- import_tasks: ping.yaml

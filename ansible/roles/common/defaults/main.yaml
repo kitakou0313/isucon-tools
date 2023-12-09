@@ -1,0 +1,2 @@
+# ${role名}/defaults/main.yaml 
+# role内でデフォルトで使われる変数を定義する
