@@ -1,2 +1,3 @@
 ---
 - import_tasks: ping.yaml
+- import_tasks: install_node_exporter.yaml

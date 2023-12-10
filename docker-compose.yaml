@@ -70,6 +70,7 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "2222:22"
+      - "9100:9100"
   
   deploy-test-2:
     build:
@@ -77,6 +78,7 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "2223:22"
+      - "9101:9100"
 
 volumes:
   prom_data:
