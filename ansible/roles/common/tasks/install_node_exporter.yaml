@@ -28,6 +28,8 @@
 
 - name: start node_exporter
   command: /bin/node_exporter
+  async: 45
+  poll: 0
 
 # - name: create service files
 #   copy:
