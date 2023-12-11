@@ -1,3 +1,6 @@
 ---
 - import_tasks: ping.yaml
 - import_tasks: install_node_exporter.yaml
+  when: is_using_systemd == false
+- import_tasks: install_node_exporter_with_systemd.yaml
+  when: is_using_systemd == true

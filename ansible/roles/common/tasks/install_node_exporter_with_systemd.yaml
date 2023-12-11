@@ -26,7 +26,16 @@
     src: ~/node_exporter/node_exporter-1.7.0.linux-amd64/node_exporter
   become: true
 
-- name: start node_exporter
-  command: /bin/node_exporter
-  async: 45
-  poll: 0
+- name: create service files
+  copy:
+    src: ../files/node_exporter.service
+    dest: /etc/systemd/system/node-exporter.service
+  become: true
+
+- name: start node_exporter service
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: node-exporter.service
+  become: true
