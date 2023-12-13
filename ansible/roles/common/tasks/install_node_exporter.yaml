@@ -18,6 +18,11 @@
     remote_src: true
     src: ~/node_exporter/node_exporter-1.7.0.linux-amd64.tar.gz
     dest: ~/node_exporter
+  register: extract_res
+
+- name: Check res
+  debug:
+    msg: "{{extract_res}}"
 
 - name: create link
   file:
