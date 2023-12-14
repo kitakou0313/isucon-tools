@@ -1,3 +1,7 @@
+- name: Print all available facts
+  ansible.builtin.debug:
+    var: ansible_facts
+
 - name: create install dir for node_exporter
   file:
     path: ~/node_exporter
@@ -19,6 +23,15 @@
     src: ~/node_exporter/node_exporter-1.7.0.linux-amd64.tar.gz
     dest: ~/node_exporter
   register: extract_res
+
+- block:
+    - name: Check res in block
+      debug:
+        msg: "{{extract_res}}"
+    - name: Check res in block 
+      debug:
+        msg: "{{extract_res}}"
+      when: extract_res.changed
 
 - name: Check res
   debug:
