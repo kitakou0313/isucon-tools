@@ -24,19 +24,6 @@
     dest: ~/node_exporter
   register: extract_res
 
-- block:
-    - name: Check res in block
-      debug:
-        msg: "{{extract_res}}"
-    - name: Check res in block 
-      debug:
-        msg: "{{extract_res}}"
-      when: extract_res.changed
-
-- name: Check res
-  debug:
-    msg: "{{extract_res}}"
-
 - name: create link
   file:
     path: /bin/node_exporter
