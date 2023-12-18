@@ -1,0 +1,9 @@
+
+- name: Handler invoked by listener
+  debug:
+    msg: "Handler by listener"
+  listen: "handler invoked by listener"
+
+- name: Handler invoked by name
+  debug:
+    msg: "Handler by name"
