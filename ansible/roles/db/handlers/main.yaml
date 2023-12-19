@@ -1,3 +1,4 @@
+# Handler taskのnotifyにより実行されるtask 呼び出したtaskの結果がchangedならplayの最後に一度のみ実行される
 
 - name: Handler invoked by listener
   debug:
