@@ -2,16 +2,12 @@
 - name: Ping servers
   ansible.builtin.ping:
   register: ping_res
-
-- block:
-  - name: Check res in block
-    debug:
-      msg: "{{ping_res}}"
-  - name: Check res in block 
-    debug:
-      msg: "{{ping_res}}"
-    when: extract_res.changed
-
+  changed_when: true
+  notify: Handler invoked by name
+  tags: check-res
+  
 - name: Check res
   debug:
     msg: "{{ping_res}}"
+  changed_when: true
+  notify: handler invoked by listener
