@@ -11,3 +11,12 @@
     msg: "{{ping_res}}"
   changed_when: true
   notify: handler invoked by listener
+
+# loop keywordによってtaskをあるリストに対して繰り返し実行できる
+# task内ではitemという変数で参照される
+- name: Loop test
+  debug:
+    msg: "{{ item.test1 }} : {{ item.test2 }}"
+  loop: 
+    - {test1: "item1", test2: "item1"}
+    - {test1: "item2", test2: "item2"}
