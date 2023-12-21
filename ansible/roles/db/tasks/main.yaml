@@ -20,3 +20,13 @@
   loop: 
     - {test1: "item1", test2: "item1"}
     - {test1: "item2", test2: "item2"}
+
+# until keywordによってtaskを条件が満たされるまで実行できる
+# リトライ数はretries, 間隔はdelay
+- name: Tasks with until
+  debug:
+    msg: "loop test"
+  register: result
+  until: result.changed
+  retries: 5
+  delay: 10
