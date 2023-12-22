@@ -20,6 +20,12 @@
   loop: 
     - {test1: "item1", test2: "item1"}
     - {test1: "item2", test2: "item2"}
+  register: res
+
+# loopの結果はregister keywordで指定した変数に追加されていく
+- name: Loop res
+  debug:
+    msg: "{{res}}"
 
 # until keywordによってtaskを条件が満たされるまで実行できる
 # リトライ数はretries, 間隔はdelay
@@ -29,4 +35,4 @@
   register: result
   until: result.changed
   retries: 5
-  delay: 10
+  delay: 1
