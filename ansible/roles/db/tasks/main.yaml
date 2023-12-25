@@ -4,6 +4,7 @@
   register: ping_res
   changed_when: true
   notify: Handler invoked by name
+  throttle: 1 # serialはplaybook単位でしか決められないが，throttleはタスクごとに指定可能
   tags: check-res
   
 - name: Check res
@@ -12,21 +13,21 @@
   changed_when: true
   notify: handler invoked by listener
 
-# loop keywordによってtaskをあるリストに対して繰り返し実行できる
-# task内ではitemという変数で参照される
-# ループ中は個々のtaskと同様に変数で参照できる
-- name: Loop test
-  debug:
-    msg: "{{ item.test1 }} : {{ item.test2 }}"
-  loop: 
-    - {test1: "item1", test2: "item1"}
-    - {test1: "item2", test2: "item2"}
-  register: result
+# # loop keywordによってtaskをあるリストに対して繰り返し実行できる
+# # task内ではitemという変数で参照される
+# # ループ中は個々のtaskと同様に変数で参照できる
+# - name: Loop test
+#   debug:
+#     msg: "{{ item.test1 }} : {{ item.test2 }}"
+#   loop: 
+#     - {test1: "item1", test2: "item1"}
+#     - {test1: "item2", test2: "item2"}
+#   register: result
 
-# loopの結果はregister keywordで指定した変数のresultsに追加されていく
-- name: Loop res
-  debug:
-    msg: "{{result}}"
+# # loopの結果はregister keywordで指定した変数のresultsに追加されていく
+# - name: Loop res
+#   debug:
+#     msg: "{{result}}"
 
 # # until keywordによってtaskを条件が満たされるまで実行できる
 # # リトライ数はretries, 間隔はdelay
