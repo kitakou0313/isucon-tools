@@ -1,6 +1,11 @@
 ---
-
 - name: Ping all hosts
   hosts: all
+  serial: 1 # 並列実行数を決められる
   roles:
-    - common
+    - db
+
+# - name: Ping db
+#   hosts: db
+#   roles: 
+#     - db
