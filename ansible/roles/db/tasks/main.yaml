@@ -4,8 +4,10 @@
   register: ping_res
   changed_when: true
   notify: Handler invoked by name
-  throttle: 1 # serialはplaybook単位でしか決められないが，throttleはタスクごとに指定可能
+  # throttle: 1 # serialはplaybook単位でしか決められないが，throttleはタスクごとに指定可能
   tags: check-res
+  run_once: true
+  delegate_to: host2 # run_onceとdelegate_toでtaskを実行するhostを指定できる
   
 - name: Check res
   debug:
