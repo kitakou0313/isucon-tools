@@ -1,0 +1,6 @@
+# roleのprerequisitesを定義できる
+# あるroleを実行するとき，自動的にdependenciesで指定されたroleが実行される
+# 暗黙的な実行になるのでよほど冪等に実装できていない限りplaybookに明記した方がいいのでは
+---
+dependencies:
+  - role: common
