@@ -4,3 +4,8 @@
 ---
 dependencies:
   - role: common
+
+# 基本的にroleはvariableが異なる場合を除いて一回しか実行されない
+## 冪等で実装されている前提なので
+# 複数回実行したい場合は，allow_duplicatesで設定
+allow_duplicates: true
