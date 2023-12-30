@@ -40,3 +40,13 @@
 #   until: result.changed
 #   retries: 5
 #   delay: 1
+
+# rescue 対応するblock内でfailした場合
+- name: test rescue
+  block:
+    - name: fail task
+      ansible.builtin.command: /bin/false
+  rescue:
+    - name: catch error
+      ansible.builtin.debug:
+        msg: 'catch error !'
