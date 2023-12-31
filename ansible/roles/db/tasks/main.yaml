@@ -41,7 +41,9 @@
 #   retries: 5
 #   delay: 1
 
-# rescue 対応するblock内でfailした場合
+# rescue 対応するblock内でtaskがfailになった場合，rescueが実行される
+# try-catch文みたいな感じ
+# alwaysは常時実行される
 - name: test rescue
   block:
     - name: fail task
@@ -50,3 +52,7 @@
     - name: catch error
       ansible.builtin.debug:
         msg: 'catch error !'
+  always:
+    - name: task always done
+      ansible.builtin.debug:
+        msg: 'this task is always done'
