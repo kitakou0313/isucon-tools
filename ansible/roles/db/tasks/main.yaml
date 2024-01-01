@@ -44,6 +44,7 @@
 # rescue 対応するblock内でtaskがfailになった場合，rescueが実行される
 # try-catch文みたいな感じ
 # alwaysは常時実行される
+# ansible_failed_result, ansible_failed_taskはrescue内で参照可能　taskの結果が入る
 - name: test rescue
   block:
     - name: fail task
@@ -51,7 +52,11 @@
   rescue:
     - name: catch error
       ansible.builtin.debug:
-        msg: 'catch error !'
+        msg: 'catch error! {{ansible_failed_task}}'
+
+    - name: catch error
+      ansible.builtin.debug:
+        msg: 'catch error! {{ansible_failed_result}}'
   always:
     - name: task always done
       ansible.builtin.debug:
