@@ -1,19 +1,19 @@
 ---
-- name: Ping servers
-  ansible.builtin.ping:
-  register: ping_res
-  changed_when: true
-  notify: Handler invoked by name
-  # throttle: 1 # serialはplaybook単位でしか決められないが，throttleはタスクごとに指定可能
-  tags: check-res
-  run_once: true
-  delegate_to: host2 # run_onceとdelegate_toでtaskを実行するhostを指定できる
+# - name: Ping servers
+#   ansible.builtin.ping:
+#   register: ping_res
+#   changed_when: true
+#   notify: Handler invoked by name
+#   # throttle: 1 # serialはplaybook単位でしか決められないが，throttleはタスクごとに指定可能
+#   tags: check-res
+#   run_once: true
+#   delegate_to: host2 # run_onceとdelegate_toでtaskを実行するhostを指定できる
   
-- name: Check res
-  debug:
-    msg: "{{ping_res}}"
-  changed_when: true
-  notify: handler invoked by listener
+# - name: Check res
+#   debug:
+#     msg: "{{ping_res}}"
+#   changed_when: true
+#   notify: handler invoked by listener
 
 # # loop keywordによってtaskをあるリストに対して繰り返し実行できる
 # # task内ではitemという変数で参照される
@@ -49,14 +49,15 @@
   block:
     - name: fail task
       ansible.builtin.command: /bin/false
+      notify: handler invoked failed task
   rescue:
     - name: catch error
       ansible.builtin.debug:
         msg: 'catch error! {{ansible_failed_task}}'
-
     - name: catch error
       ansible.builtin.debug:
         msg: 'catch error! {{ansible_failed_result}}'
+      meta: flush_handlers
   always:
     - name: task always done
       ansible.builtin.debug:
