@@ -63,29 +63,35 @@
 #       ansible.builtin.debug:
 #         msg: 'this task is always done'
 
-# 各taskの結果はregister変数に格納できる
-- name: register vars
-  ansible.builtin.command: /bin/false
-  register: result
-  ignore_errors: true
+# https://jinja.palletsprojects.com/en/3.1.x/templates/#expressions 記載のexpressionはplaybooks内で利用可能
+# 全体を"で囲む必要がある yamlの構文に合わせるため
+- name: test jinja2 expression
+  ansible.builtin.debug:
+    msg: "{{ 1 + 1 }}"
 
-# 各タスクの結果をwhen句で使用したい場合，is {status}で参照できる
-- name: Run only if result is success
-  ansible.builtin.command: /bin/something
-  when: result is succeeded
+# # 各taskの結果はregister変数に格納できる
+# - name: register vars
+#   ansible.builtin.command: /bin/false
+#   register: result
+#   ignore_errors: true
 
-# 各タスクの結果をwhen句で使用したい場合，is {status}で参照できる
-- name: Run only if result is failed
-  ansible.builtin.command: /bin/something
-  when: result is failed
+# # 各タスクの結果をwhen句で使用したい場合，is {status}で参照できる
+# - name: Run only if result is success
+#   ansible.builtin.command: /bin/something
+#   when: result is succeeded
 
-# 各タスクの結果をwhen句で使用したい場合，is {status}で参照できる
-- name: Run only if result is skipped
-  ansible.builtin.command: /bin/something
-  when: result is skipped
+# # 各タスクの結果をwhen句で使用したい場合，is {status}で参照できる
+# - name: Run only if result is failed
+#   ansible.builtin.command: /bin/something
+#   when: result is failed
+
+# # 各タスクの結果をwhen句で使用したい場合，is {status}で参照できる
+# - name: Run only if result is skipped
+#   ansible.builtin.command: /bin/something
+#   when: result is skipped
 
 
-# 各タスクの結果をwhen句で使用したい場合，is {status}で参照できる
-- name: Run only if result is changed
-  ansible.builtin.command: /bin/something
-  when: result is changed
+# # 各タスクの結果をwhen句で使用したい場合，is {status}で参照できる
+# - name: Run only if result is changed
+#   ansible.builtin.command: /bin/something
+#   when: result is changed
