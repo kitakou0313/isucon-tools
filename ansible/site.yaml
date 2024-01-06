@@ -1,7 +1,8 @@
 ---
 - name: Ping all hosts
-  hosts: all
-  serial: 1 # 並列実行数を決められる
+  hosts: all:!host1 #play毎に実行するNodeの選択にpatternを適用可能 
+  # https://docs.ansible.com/ansible/latest/inventory_guide/intro_patterns.html#common-patterns
+  # serial: 1 # 並列実行数を決められる
   roles:
     - db
 
