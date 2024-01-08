@@ -1,13 +1,13 @@
 ---
-# - name: Ping servers
-#   ansible.builtin.ping:
-#   register: ping_res
-#   changed_when: true
-#   notify: Handler invoked by name
-#   # throttle: 1 # serialはplaybook単位でしか決められないが，throttleはタスクごとに指定可能
-#   tags: check-res
-#   run_once: true
-#   delegate_to: host2 # run_onceとdelegate_toでtaskを実行するhostを指定できる
+- name: Ping servers
+  ansible.builtin.ping:
+  register: ping_res
+  changed_when: true
+  notify: Handler invoked by name
+  # throttle: 1 # serialはplaybook単位でしか決められないが，throttleはタスクごとに指定可能
+  tags: check-res
+  run_once: true
+  delegate_to: localhost # run_onceとdelegate_toでtaskを実行するhostを指定できる localhostを指定するとControl Nodeに対して実行できる
   
 # - name: Check res
 #   debug:
@@ -69,14 +69,14 @@
 #   ansible.builtin.debug:
 #     msg: "{{ 1 + 1 }}"
 
-- name: print facts
-  ansible.builtin.debug:
-    msg: "{{ ansible_facts }}"
+# - name: print facts
+#   ansible.builtin.debug:
+#     msg: "{{ ansible_facts }}"
 
-# group_byで動的にhostsのgroupを作成できる
-- name: create group based on facts
-  ansible.builtin.group_by:
-    key: "{{ ansible_facts['distribution'] }}"
+# # group_byで動的にhostsのgroupを作成できる
+# - name: create group based on facts
+#   ansible.builtin.group_by:
+#     key: "{{ ansible_facts['distribution'] }}"
 
 # # 各taskの結果はregister変数に格納できる
 # - name: register vars
