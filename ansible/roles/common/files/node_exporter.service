@@ -1,9 +1,0 @@
-[Unit]
-Description=Node Exporter
-
-[Service]
-ExecStart=/bin/node_exporter
-ExecReload=/bin/kill -HUP $MAINPID
-
-Restart=always
-WorkingDirectory=/opt/node_exporter
