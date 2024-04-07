@@ -1,0 +1,53 @@
+# roles/node_exporter_install/tasks/main.yml
+
+---
+- name: Ensure the required packages are installed
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - wget
+    - tar
+
+- name: Download Node Exporter binary
+  become: true
+  get_url:
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+    dest: "/tmp/node_exporter.tar.gz"
+
+- name: Extract Node Exporter binary
+  become: true
+  unarchive:
+    src: "/tmp/node_exporter.tar.gz"
+    dest: "/opt/node_exporter"
+    remote_src: yes
+    creates: "/opt/node_exporter/node_exporter-{{ node_exporter_version }}"
+
+- name: Create symlink for Node Exporter binary
+  become: true
+  file:
+    src: "/opt/node_exporter/node_exporter-{{ node_exporter_version }}/node_exporter"
+    dest: "/usr/local/bin/node_exporter"
+    state: link
+
+- name: Ensure the Node Exporter service file exists
+  become: true
+  copy:
+    src: node_exporter.service
+    dest: /etc/systemd/system/node_exporter.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Reload systemd to pick up new service
+  become: true
+  systemd:
+    daemon_reload: yes
+
+- name: Ensure Node Exporter service is enabled and started
+  become: true
+  service:
+    name: node_exporter
+    state: started
+    enabled: yes
