@@ -39,6 +39,9 @@ pt-query-digest:
 ansible:
 	docker compose run --rm -it ansible bash
 
+.PHONY: prom-grafana
+prom-grafana:
+	docker compose up -d prometheus grafana
 
 .PHONY: up-test-server
 up-test-server:
