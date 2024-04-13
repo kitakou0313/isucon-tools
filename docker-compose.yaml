@@ -67,7 +67,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - ./prometheus-grafana/grafana/datasources:/etc/grafana/provisioning/datasources
-      # - ./prometheus-grafana/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./prometheus-grafana/grafana/dashboards:/etc/grafana/provisioning/dashboards
 
   deploy-test-1:
     build:
