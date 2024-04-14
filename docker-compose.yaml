@@ -68,6 +68,7 @@ services:
     volumes:
       - ./prometheus-grafana/grafana/datasources:/etc/grafana/provisioning/datasources
       - ./prometheus-grafana/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./prometheus-grafana/grafana/dashboard-jsons:/var/lib/grafana/dashboards
 
   deploy-test-1:
     build:
