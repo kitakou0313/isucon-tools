@@ -1,5 +1,4 @@
 ---
-- name: Ping all hosts
-  hosts: 
+- hosts: all
   roles:
-    - node_expoter
+  - node_exporter
