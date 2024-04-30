@@ -52,7 +52,6 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - prom_data:/prometheus
       - ./prometheus-grafana/prom/prometheus.yaml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
