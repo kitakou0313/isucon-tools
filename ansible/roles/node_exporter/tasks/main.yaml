@@ -16,13 +16,18 @@
     url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
     dest: "/tmp/node_exporter.tar.gz"
 
+- name: test directory created
+  file: 
+    path: "/opt/node_exporter"
+    state: directory
+
 - name: Extract Node Exporter binary
   become: true
   unarchive:
     src: "/tmp/node_exporter.tar.gz"
     dest: "/opt/node_exporter"
     remote_src: yes
-    creates: "/opt/node_exporter/node_exporter-{{ node_exporter_version }}"
+    # creates: "/opt/node_exporter/node_exporter-{{ node_exporter_version }}"
 
 - name: Create symlink for Node Exporter binary
   become: true
