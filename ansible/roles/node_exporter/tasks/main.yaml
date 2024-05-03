@@ -32,7 +32,7 @@
 - name: Create symlink for Node Exporter binary
   become: true
   file:
-    src: "/opt/node_exporter/node_exporter-{{ node_exporter_version }}/node_exporter"
+    src: "/opt/node_exporter/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz/node_exporter"
     dest: "/usr/local/bin/node_exporter"
     state: link
 
