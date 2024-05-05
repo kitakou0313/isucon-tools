@@ -13,7 +13,7 @@
 - name: Download Node Exporter binary
   become: true
   get_url:
-    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ node_exporter_version }}.{{ cpu_arch }}.tar.gz"
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ os }}-{{ cpu_arch }}.tar.gz"
     dest: "/tmp/node_exporter.tar.gz"
 
 - name: test directory created
@@ -32,7 +32,7 @@
 - name: Create symlink for Node Exporter binary
   become: true
   file:
-    src: "/opt/node_exporter/node_exporter-{{ node_exporter_version }}.{{ cpu_arch }}.tar.gz/node_exporter"
+    src: "/opt/node_exporter/node_exporter-{{ node_exporter_version }}.{{ os }}-{{ cpu_arch }}.tar.gz/node_exporter"
     dest: "/usr/local/bin/node_exporter"
     state: link
 
