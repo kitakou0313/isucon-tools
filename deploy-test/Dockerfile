@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -19,7 +19,6 @@ COPY ./id_rsa/id_rsa.pub /root/authorized_keys
 
 WORKDIR /root
 
-RUN mkdir ~/.ssh
 RUN mv ~/authorized_keys ~/.ssh/authorized_keys
 RUN chmod 0600 ~/.ssh/authorized_keys
 
