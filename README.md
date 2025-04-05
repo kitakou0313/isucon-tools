@@ -12,6 +12,8 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
         - `scp -rv ${user}@${host}:/etc/nginx/* ./configs/nginx/${hosts.txtの*_DIR_NAME}`
         - `scp -rv ${user}@${host}:/etc/mysql/* ./configs/mysql/${hosts.txtの*_DIR_NAME}`
         - `scp -rv ${user}@${host}:/home/isucon/webapp/* ./webapp`
+- `./ping-scripts.sh`を使用し、疎通確認を行います
+    - 初回のssh接続の場合、`rsync`による転送がうまくいかないことがあります
 - 各スクリプトのデプロイ先のパスなどを修正します
     - `deploy/deloy.sh`
         - restartするservice名も変更
