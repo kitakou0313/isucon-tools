@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "grafana": {
+      "command": "uvx",
+      "args": [
+        "mcp-grafana"
+      ],
+      "env": {
+        "GRAFANA_URL": "http://localhost:3000"
+      }
+    }
+  }
+}
