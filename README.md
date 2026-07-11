@@ -7,6 +7,11 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
     - ツールを実行するためのdocker imageがビルドされます
 - 本番環境への接続情報（ホスト名|IPアドレス、`SSH`のポート番号）を`./hosts/hosts.txt`に記述します
     - 本リポジトリ内のスクリプトはこのファイル内の接続情報を用いて通信します
+- 変数をshellで参照するコマンド
+    - bash
+        - `source ./hosts/hosts_to_fish.sh`
+    - fish
+        - `bash ./hosts/hosts_to_fish.sh | source`
 - 本番環境からwebアプリのコード、初期化用SQLファイルなどを取得し、`./webapp`内に追加します
     - コマンド例
         - `scp -rv ${user}@${host}:/etc/nginx/* ./configs/nginx/${hosts.txtの*_DIR_NAME}`
