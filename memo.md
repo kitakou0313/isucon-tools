@@ -1,11 +1,11 @@
 # テンプレコマンド集
 
-## DB
+## RDB
 
-### SQL系
+### MySQL
 ```sql
 # index作成
-CREATE INDEX idx ON `table1` (`column1`, `column2`);
+CREATE INDEX ${index名} ON ${table名} (${column名1}, ${column名2});
 CREATE INDEX  ON `` (``);
 CREATE INDEX  ON `` (``,``);
 
