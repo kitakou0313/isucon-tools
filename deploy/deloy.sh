@@ -18,4 +18,14 @@ do
   "sudo systemctl restart hogehoge"
 done
 
+echo "Start to deploy OBI configs"
+
+for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
+do
+  echo "Deploy to ${APP_HOSTS[host_idx]}:${APP_HOSTS_SSH_PORT[host_idx]}"
+  rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]}" \
+  -av ./obi-setup ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:/root/
+
+done
+
 echo "Finish to deploy apps"
