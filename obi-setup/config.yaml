@@ -1,0 +1,269 @@
+# OBI (OpenTelemetry eBPF Instrumentation) 設定ファイル
+# 参照元: https://opentelemetry.io/docs/zero-code/obi/configure/
+#
+# 各項目は公式ドキュメントで確認できたデフォルト値をコメントアウトした状態で記載している。
+# 有効化したい項目はコメントを外して値を設定すること。
+# 各設定項目の直前に、定義元のドキュメントページへのリンクを記載している。
+
+# --- トップレベル設定 ---
+# 以下、特記のない項目は https://opentelemetry.io/docs/zero-code/obi/configure/options/ で定義
+
+# 対象プロセスを開いているポート番号で選択する(カンマ区切り・範囲指定可)
+# https://opentelemetry.io/docs/zero-code/obi/configure/options/
+# 動作に必須のため、対象webappのポートに変更して有効化すること
+open_port: "8443" # 要変更: 対象アプリの待受ポートに書き換える
+
+# 対象プロセスを実行ファイルパスのglobで選択する場合は open_port の代わりにこちらを使う
+# https://opentelemetry.io/docs/zero-code/obi/configure/options/
+# auto_target_exe: "*/webapp"
+
+# 対象プロセスを検出した言語(go, python, ruby, java, dotnet, nodejs, rust等)のglobで選択する場合
+# https://opentelemetry.io/docs/zero-code/obi/configure/options/
+# auto_target_language: "go"
+
+# 対象プロセスをPIDで直接指定する場合
+# https://opentelemetry.io/docs/zero-code/obi/configure/options/
+# target_pids: [1234]
+
+# グレースフルシャットダウンのタイムアウト
+# https://opentelemetry.io/docs/zero-code/obi/configure/options/
+# shutdown_timeout: 10s
+
+# ログレベル: DEBUG, INFO, WARN, ERROR
+# https://opentelemetry.io/docs/zero-code/obi/configure/options/
+# log_level: INFO
+
+# ログ出力フォーマット: text, json
+# https://opentelemetry.io/docs/zero-code/obi/configure/options/
+# log_format: text
+
+# 計装したトレースを標準出力に出力する: disabled, text, json
+# https://opentelemetry.io/docs/zero-code/obi/configure/options/
+# 動作確認用に text にすると `docker compose logs -f obi` でトレースを確認できる
+trace_printer: text
+
+# 起動時に必要なcapabilitiesが不足している場合に即座に失敗させる
+# https://opentelemetry.io/docs/zero-code/obi/configure/options/
+enforce_sys_caps: true
+
+# ヒューリスティックなSQLクライアント検出を有効にする
+# https://opentelemetry.io/docs/zero-code/obi/configure/metrics-traces-attributes/
+# heuristic_sql_detect: false
+
+# --- サービスディスカバリ ---
+# 以下、特記のない項目は https://opentelemetry.io/docs/zero-code/obi/configure/service-discovery/ で定義
+discovery:
+  # 個別のサービスごとに選択条件・名前/namespaceの上書きを指定する場合
+  # https://opentelemetry.io/docs/zero-code/obi/configure/service-discovery/
+  # instrument:
+  #   - open_ports: 8443
+  #     exe_path: "*/webapp"
+
+  # 計装から除外するサービスの選択条件
+  # https://opentelemetry.io/docs/zero-code/obi/configure/service-discovery/
+  # exclude_instrument:
+  #   - exe_path: "*/sidecar"
+
+  # デフォルトで除外される対象(OBI自身やOTel Collectorなど)を上書きする場合のみ指定
+  # https://opentelemetry.io/docs/zero-code/obi/configure/service-discovery/
+  # default_exclude_instrument:
+  #   - exe_path: "{*/obi,obi,*otelcol,*otelcol-contrib,*otelcol-contrib*}"
+
+  # eBPFトレーサーによるGo固有の検出を無効化する
+  # https://opentelemetry.io/docs/zero-code/obi/configure/service-discovery/
+  # skip_go_specific_tracers: false
+
+  # 既にOpenTelemetryで計装済みのサービスをOBIの計装対象から除外する
+  # https://opentelemetry.io/docs/zero-code/obi/configure/service-discovery/
+  # exclude_otel_instrumented_services: true
+
+  # 既に計装済みのサービスについて、span metrics/service graph metricsの生成のみ除外する
+  # https://opentelemetry.io/docs/zero-code/obi/configure/service-discovery/
+  # exclude_otel_instrumented_services_span_metrics: false
+
+# --- eBPF挙動・パフォーマンスチューニング ---
+ebpf:
+  # 分散トレースのコンテキスト伝搬方式: all, headers, tcp, "headers,tcp", disabled
+  # https://opentelemetry.io/docs/zero-code/obi/configure/metrics-traces-attributes/
+  # context_propagation: disabled
+
+  # 受信したTraceparentヘッダーをトレーススパンに反映する
+  # https://opentelemetry.io/docs/zero-code/obi/configure/metrics-traces-attributes/
+  # track_request_headers: false
+
+  # eBPFリングバッファがこの件数貯まるとユーザー空間へwake-upする
+  # https://opentelemetry.io/docs/zero-code/obi/configure/tune-performance/
+  # wakeup_len: 500
+
+  # トラフィックコントロールプローブのアタッチ方式: tc, tcx, auto
+  # https://opentelemetry.io/docs/zero-code/obi/configure/tune-performance/
+  # traffic_control_backend: auto
+
+  # HTTPリクエストをタイムアウトと判定するまでの時間(0msで無効)
+  # https://opentelemetry.io/docs/zero-code/obi/configure/tune-performance/
+  # http_request_timeout: 0ms
+
+  # レスポンス検知後すぐにテレメトリイベントを送信する(高トラフィック時の取りこぼし対策)
+  # https://opentelemetry.io/docs/zero-code/obi/configure/tune-performance/
+  # high_request_volume: false
+
+  # HTTPヘッダー/ボディの取得(payload enrichment)
+  # https://opentelemetry.io/docs/zero-code/obi/configure/metrics-traces-attributes/
+  # payload_extraction:
+  #   http:
+  #     enrichment:
+  #       enabled: false
+  #       obfuscation_string: ""
+
+  maps_config:
+    # eBPFマップサイズのスケーリング(-3〜3、0はデフォルトのまま)
+    # https://opentelemetry.io/docs/zero-code/obi/configure/tune-performance/
+    global_scale_factor: 0
+
+# --- メトリクス/トレース属性 ---
+# 以下、特記のない項目は https://opentelemetry.io/docs/zero-code/obi/configure/metrics-traces-attributes/ で定義
+# attributes:
+#   select:
+#     traces:
+#       db_query_text: false
+#       db_response_error: false
+#       url_query: false
+#   instance_id:
+#     dns: true
+#     override_hostname: ""
+#   kubernetes:
+#     enable: false # true or "autodetect"
+#     kubeconfig_path: "~/.kube/config"
+#     disable_informers: []
+#     meta_restrict_local_node: false
+#     informers_sync_timeout: 30s
+#     reconnect_initial_interval: 5s
+#     informers_resync_period: 30m
+#     meta_cache_address: ""
+#     service_name_template: ""
+#   extra_group_attributes: {}
+
+# --- OpenTelemetry OTLP メトリクスエクスポート ---
+# 以下、特記のない項目は https://opentelemetry.io/docs/zero-code/obi/configure/export-data/ で定義
+otel_metrics_export:
+  # OTLPエンドポイント(未設定の場合はエクスポートしない)
+  # https://opentelemetry.io/docs/zero-code/obi/configure/export-data/
+  # OTEL_EXPORTER_OTLP_ENDPOINT または OTEL_EXPORTER_OTLP_METRICS_ENDPOINT でも指定可
+  # endpoint: "http://localhost:4318"
+
+  # プロトコル: http/json, http/protobuf, grpc (未設定時はポート番号から推測)
+  # https://opentelemetry.io/docs/zero-code/obi/configure/export-data/
+  # protocol: ""
+
+  # サーバー証明書の検証をスキップする
+  # https://opentelemetry.io/docs/zero-code/obi/configure/export-data/
+  # insecure_skip_verify: false
+
+  # エクスポート間隔
+  # https://opentelemetry.io/docs/zero-code/obi/configure/export-data/
+  # interval: 60s
+
+  # service graph生成時に自己参照を許可する
+  # https://opentelemetry.io/docs/zero-code/obi/configure/export-data/
+  # allow_service_graph_self_references: false
+
+  # メトリクスを収集する計装対象("*"で全て)
+  # https://opentelemetry.io/docs/zero-code/obi/configure/export-data/
+  # instrumentations: ["*"]
+
+  # ヒストグラムのbucket境界値の上書き
+  # https://opentelemetry.io/docs/zero-code/obi/configure/metrics-histograms/
+  # buckets:
+  #   duration_histogram: [0, 0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10]
+
+  # ヒストグラム種別: explicit_bucket_histogram, base2_exponential_bucket_histogram
+  # https://opentelemetry.io/docs/zero-code/obi/configure/metrics-histograms/
+  # histogram_aggregation: explicit_bucket_histogram
+
+# --- OpenTelemetry OTLP トレースエクスポート ---
+# 以下、特記のない項目は https://opentelemetry.io/docs/zero-code/obi/configure/export-data/ で定義
+otel_traces_export:
+  # OTLPエンドポイント(未設定の場合はエクスポートしない)
+  # https://opentelemetry.io/docs/zero-code/obi/configure/export-data/
+  # OTEL_EXPORTER_OTLP_ENDPOINT または OTEL_EXPORTER_OTLP_TRACES_ENDPOINT でも指定可
+  # endpoint: "http://localhost:4318"
+
+  # プロトコル: http/json, http/protobuf, grpc (未設定時はポート番号から推測)
+  # https://opentelemetry.io/docs/zero-code/obi/configure/export-data/
+  # protocol: ""
+
+  # サーバー証明書の検証をスキップする
+  # https://opentelemetry.io/docs/zero-code/obi/configure/export-data/
+  # insecure_skip_verify: false
+
+  # トレースを収集する計装対象("*"で全て)
+  # https://opentelemetry.io/docs/zero-code/obi/configure/export-data/
+  # instrumentations: ["*"]
+
+  # トレースサンプリング設定
+  # https://opentelemetry.io/docs/zero-code/obi/configure/sample-traces/
+  # sampler:
+  #   name: "parentbased_always_on"
+  #   arg: ""
+
+# --- Prometheus エクスポート ---
+# 以下、特記のない項目は https://opentelemetry.io/docs/zero-code/obi/configure/export-data/ で定義
+# prometheus_export:
+#   # Prometheusスクレイプ用HTTPポート(未設定または0で無効)
+#   port: 8999
+#   # スクレイプ用パス
+#   path: /metrics
+#   # target_infoメトリクスに追加するリソース属性
+#   extra_resource_attributes: []
+#   # 更新のないメトリクスインスタンスを報告しなくなるまでの時間
+#   ttl: 5m
+#   # ヒストグラムのbucket境界値の上書き
+#   # https://opentelemetry.io/docs/zero-code/obi/configure/metrics-histograms/
+#   buckets:
+#     request_size_histogram: [0, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192]
+#     response_size_histogram: [0, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192]
+#   # exemplarの付与方式: always_on, always_off, trace_based
+#   exemplar_filter: always_off
+#   # service graph生成時に自己参照を許可する
+#   allow_service_graph_self_references: false
+#   # メトリクスを収集する計装対象("*"で全て)
+#   instrumentations: ["*"]
+
+# --- メトリクス/トレースのフィルタリング ---
+# https://opentelemetry.io/docs/zero-code/obi/configure/filter-metrics-traces/
+# デフォルトはフィルタなし(全て報告)。属性値によるフィルタが必要な場合のみ記述する。
+# filter:
+#   application:
+#     server.port:
+#       greater_equals: 8000
+#   network:
+#     transport:
+#       not_match: UDP
+
+# --- HTTPルートデコレータ ---
+# https://opentelemetry.io/docs/zero-code/obi/configure/routes-decorator/
+# デフォルトは未設定(http.route属性の正規化を行わない)。
+# routes:
+#   # http.routeとして扱うURLパスパターン
+#   patterns:
+#     - /basic/:id
+#   # 無視するURLパスパターン(該当するtrace/metricイベントを破棄)
+#   ignored_patterns:
+#     - /metrics
+#   # ignored_patterns適用対象: all, traces, metrics
+#   ignore_mode: all
+#   # patternsに一致しないパスの扱い: heuristic, path, wildcard, unset
+#   unmatched: heuristic
+#   # heuristicモードで置き換えるパス要素の文字
+#   wildcard_char: "*"
+
+# --- OBI内部メトリクス ---
+# https://opentelemetry.io/docs/zero-code/obi/configure/internal-metrics-reporter/
+# internal_metrics:
+#   # 内部メトリクスのエクスポータ: disabled, prometheus, otel
+#   exporter: disabled
+#   prometheus:
+#     # Prometheusスクレイプ用HTTPポート(未設定または0で無効)
+#     port: 0
+#     # スクレイプ用パス
+#     path: /internal/metrics
