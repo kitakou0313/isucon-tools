@@ -14,9 +14,9 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
         - `bash ./hosts/hosts_to_fish.sh | source`
 - 本番環境からwebアプリのコード、初期化用SQLファイルなどを取得し、`./webapp`内に追加します
     - コマンド例
-        - `scp -rv ${user}@${host}:/etc/nginx/* ./configs/nginx/${hosts.txtの*_DIR_NAME}`
-        - `scp -rv ${user}@${host}:/etc/mysql/* ./configs/mysql/${hosts.txtの*_DIR_NAME}`
-        - `scp -rv ${user}@${host}:/home/isucon/webapp/* ./webapp`
+        - `scp -rv ${HOST1_SSH_USER}@${HOST1}:/etc/nginx/* ./configs/nginx/${hosts.txtの*_DIR_NAME}`
+        - `scp -rv ${HOST1_SSH_USER}@${HOST1}:/etc/mysql/* ./configs/mysql/${hosts.txtの*_DIR_NAME}`
+        - `scp -rv ${HOST1_SSH_USER}@${HOST1}:/home/isucon/webapp/* ./webapp`
 - `./ping-scripts.sh`を使用し、疎通確認を行います
     - 初回のssh接続の場合、`rsync`による転送がうまくいかないことがあります
 - 各スクリプトのデプロイ先のパスなどを修正します
