@@ -37,6 +37,15 @@ isuconで使うツール群をdockerで使えるようにまとめたtemplate
     - `tar xvfp mysql.tar -C /`
 - ベンチ用設定導入
 
+## トンネリング
+lgtm stackを用いる場合、sshコマンドでのトンネリングが有効（サーバー -> 外部のポート開放が不要なので）
+
+- ポート番号はローカルでLIESTENしているOTel Collectorのものを利用する
+- プロセスがハングしないようにする autosshの導入
+```
+ssh -f -N -R 4317:localhost:4317 -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes ${HOST1_SSH_USER}@{HOST1}
+autossh -f -M 0 -N -R 4317:localhost:4317 ${HOST1_SSH_USER}@{HOST1}
+```
 
 
 ## 使用可能なツール群
