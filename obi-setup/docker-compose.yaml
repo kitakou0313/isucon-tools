@@ -26,3 +26,5 @@ services:
       # config.yaml の値を一時的に上書きしたい場合は以下のように環境変数を追加できる
       # OTEL_EBPF_LOG_LEVEL: DEBUG
     restart: unless-stopped
+    security_opt: # defaultのAppArmorのProfle設定ではexeファイルへの参照ができないため追加
+      - apparmor: unconfined
