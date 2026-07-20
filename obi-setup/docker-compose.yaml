@@ -8,17 +8,8 @@ services:
     image: otel/ebpf-instrument:main
     # ホストの対象プロセスと同じPID namespaceに入るために必須
     pid: host
-    # --privileged は使わず、必要な capability のみを付与する
-    cap_add:
-      - BPF
-      - NET_RAW
-      - NET_ADMIN
-      - PERFMON
-      - DAC_READ_SEARCH
-      - CHECKPOINT_RESTORE
-      - SYS_PTRACE
-      # クラウド環境(AKS/EKS等 perf_event_paranoid設定次第)やカーネル5.11未満で必要になる場合がある
-      - SYS_ADMIN
+    privileged: true
+    network_mode: host
     volumes:
       - ./config.yaml:/etc/obi/config.yaml:ro
     environment:
@@ -26,5 +17,3 @@ services:
       # config.yaml の値を一時的に上書きしたい場合は以下のように環境変数を追加できる
       # OTEL_EBPF_LOG_LEVEL: DEBUG
     restart: unless-stopped
-    security_opt: # defaultのAppArmorのProfle設定ではexeファイルへの参照ができないため追加
-      - apparmor: unconfined
