@@ -11,11 +11,11 @@ for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
 do
   echo "Deploy to ${APP_HOSTS[host_idx]}:${APP_HOSTS_SSH_PORT[host_idx]}"
   rsync -e "ssh -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]}" \
-  -av ./webapp/ ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:/root/webapp
+  -av ./webapp/ ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]}:${HOST1_APP_DEPLOY_DIR}
 
   ssh -t -p ${APP_HOSTS_SSH_PORT[host_idx]} -i ${APP_HOSTS_SSH_PRIVATE_KEY[host_idx]} \
   ${APP_HOSTS_SSH_USER[host_idx]}@${APP_HOSTS[host_idx]} \
-  "sudo systemctl restart hogehoge"
+  "sudo systemctl restart ${HOST1_APP_SYSTEMCTL_SERVICE_NAME}"
 done
 
 echo "Start to deploy OBI configs"
