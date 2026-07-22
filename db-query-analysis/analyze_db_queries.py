@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Analyze DB table CRUD usage from webapp/nodejs SQL queries.
+"""Analyze DB table CRUD usage from webapp/golang SQL queries.
 
-Extracts SQL query strings passed to `dbConn.query(...)` / `dbConn.execute(...)`
-calls in the TypeScript source (via tree-sitter), parses each query with
-sqlglot (MySQL dialect), and reports how many Create/Read/Update/Delete
-queries touch each table.
+Extracts SQL query strings passed to `database/sql` / `jmoiron/sqlx` query
+methods (e.g. `db.Query`, `tx.ExecContext`, `db.SelectContext`, ...) in the Go
+source (via tree-sitter), parses each query with sqlglot (MySQL dialect), and
+reports how many Create/Read/Update/Delete queries touch each table.
 """
 
 import argparse
@@ -16,12 +16,27 @@ from typing import DefaultDict, Dict, List, Optional, Sequence, Tuple, Type
 import sqlglot
 from sqlglot import exp
 import tree_sitter as ts
-import tree_sitter_typescript as tsts
+import tree_sitter_go as tsgo
 
 TableStats = Dict[str, int]
 
-QUERY_METHOD_NAMES = {"query", "execute"}
-RECEIVER_HINT = "dbConn"
+# Method name -> index (within the call's named arguments) of the SQL query
+# string. `Get`/`Select` take a destination pointer before the query, and
+# `*Context` variants take a `ctx.Context` before that again.
+QUERY_METHOD_ARG_INDEX: Dict[str, int] = {
+    "Exec": 0, "ExecContext": 1,
+    "Query": 0, "QueryContext": 1,
+    "QueryRow": 0, "QueryRowContext": 1,
+    "Queryx": 0, "QueryxContext": 1,
+    "QueryRowx": 0, "QueryRowxContext": 1,
+    "Get": 1, "GetContext": 2,
+    "Select": 1, "SelectContext": 2,
+    "NamedExec": 0, "NamedExecContext": 1,
+    "NamedQuery": 0, "NamedQueryContext": 1,
+    "MustExec": 0, "MustExecContext": 1,
+    "Prepare": 0, "PrepareContext": 1,
+    "PrepareNamed": 0, "PrepareNamedContext": 1,
+}
 
 VERB_BY_EXPRESSION: Dict[Type[exp.Expression], str] = {
     exp.Insert: "create",
@@ -30,35 +45,34 @@ VERB_BY_EXPRESSION: Dict[Type[exp.Expression], str] = {
     exp.Delete: "delete",
 }
 
-JS_ESCAPES: Dict[str, str] = {
+GO_ESCAPES: Dict[str, str] = {
     "n": "\n",
     "t": "\t",
     "r": "\r",
+    "a": "\a",
     "b": "\b",
     "f": "\f",
     "v": "\v",
-    "0": "\0",
     "'": "'",
     '"': '"',
-    "`": "`",
     "\\": "\\",
 }
 
 
-def unescape_js(raw_escape: str) -> str:
-    # raw_escape includes the leading backslash, e.g. "\\n" or "\\$"
+def unescape_go(raw_escape: str) -> str:
+    # raw_escape includes the leading backslash, e.g. "\\n" or "\\\""
     ch = raw_escape[1:]
-    return JS_ESCAPES.get(ch, ch)
+    return GO_ESCAPES.get(ch, ch)
 
 
 def extract_string_value(node: ts.Node, src: bytes) -> str:
     parts: List[str] = []
     for child in node.children:
-        if child.type in ("string_fragment", "template_chars"):
+        if child.type in ("interpreted_string_literal_content", "raw_string_literal_content"):
             parts.append(src[child.start_byte : child.end_byte].decode())
         elif child.type == "escape_sequence":
             raw = src[child.start_byte : child.end_byte].decode()
-            parts.append(unescape_js(raw))
+            parts.append(unescape_go(raw))
     return "".join(parts)
 
 
@@ -68,28 +82,35 @@ def find_query_calls(
     if node.type == "call_expression":
         fn_node = node.child_by_field_name("function")
         args_node = node.child_by_field_name("arguments")
-        if fn_node is not None and args_node is not None:
-            fn_text = src[fn_node.start_byte : fn_node.end_byte].decode()
-            method_name = fn_text.rsplit(".", 1)[-1]
-            if method_name in QUERY_METHOD_NAMES and RECEIVER_HINT in fn_text:
-                named_args = args_node.named_children
-                if named_args and named_args[0].type in ("string", "template_string"):
-                    sql = extract_string_value(named_args[0], src)
-                    results.append((sql, True))
-                else:
-                    results.append((None, False))
+        if fn_node is not None and args_node is not None and fn_node.type == "selector_expression":
+            method_node = fn_node.child_by_field_name("field")
+            if method_node is not None:
+                method_name = src[method_node.start_byte : method_node.end_byte].decode()
+                arg_index = QUERY_METHOD_ARG_INDEX.get(method_name)
+                if arg_index is not None:
+                    named_args = args_node.named_children
+                    if len(named_args) > arg_index and named_args[arg_index].type in (
+                        "interpreted_string_literal",
+                        "raw_string_literal",
+                    ):
+                        sql = extract_string_value(named_args[arg_index], src)
+                        results.append((sql, True))
+                    else:
+                        results.append((None, False))
     for child in node.children:
         find_query_calls(child, src, results)
 
 
 def collect_queries(src_dir: Path) -> Tuple[List[str], int]:
-    ts_language = ts.Language(tsts.language_typescript())
-    parser = ts.Parser(ts_language)
+    go_language = ts.Language(tsgo.language())
+    parser = ts.Parser(go_language)
 
     queries: List[str] = []
     unparseable_extraction = 0
 
-    for path in sorted(src_dir.rglob("*.ts")):
+    for path in sorted(src_dir.rglob("*.go")):
+        if "vendor" in path.parts or path.name.endswith("_test.go"):
+            continue
         src = path.read_bytes()
         tree = parser.parse(src)
         results: List[Tuple[Optional[str], bool]] = []
@@ -175,12 +196,12 @@ def print_report(
 
 def parse_args() -> argparse.Namespace:
     repo_root = Path(__file__).resolve().parent.parent
-    default_src_dir = repo_root / "webapp" / "nodejs" / "src"
+    default_src_dir = repo_root / "webapp"
 
     parser = argparse.ArgumentParser(
         description=(
-            "Analyze DB table CRUD usage from webapp/nodejs SQL queries "
-            "(dbConn.query/execute calls parsed via tree-sitter + sqlglot)."
+            "Analyze DB table CRUD usage from webapp/golang SQL queries "
+            "(database/sql and sqlx query methods parsed via tree-sitter + sqlglot)."
         )
     )
     parser.add_argument(
@@ -188,7 +209,7 @@ def parse_args() -> argparse.Namespace:
         nargs="?",
         type=Path,
         default=default_src_dir,
-        help=f"TypeScript source directory to scan (default: {default_src_dir})",
+        help=f"Go source directory to scan recursively (default: {default_src_dir})",
     )
     return parser.parse_args()
 
