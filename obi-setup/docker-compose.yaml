@@ -2,6 +2,23 @@
 # 参照元: https://opentelemetry.io/docs/zero-code/obi/setup/docker/
 #         https://opentelemetry.io/docs/zero-code/obi/security/
 services:
+  # OTel Col on Host
+  ## obiからのtelemetry受信、node exporterのメトリクス収集
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: otel-collector
+    command: ["--config=/etc/otel-collector/otel-collector.yaml"]
+    network_mode: host
+    ports:
+      - "4317:4317"   # OTLP gRPC (from apps)
+      - "4318:4318"   # OTLP HTTP (from apps)
+      - "8888:8888"   # Collector metrics (scraped by Prometheus)
+    volumes:
+      - ./otel-col-on-host/otel-collector.yaml:/etc/otel-collector/otel-collector.yaml
+    # restart: unless-stopped
+
+  # obi
+  ## アプリケーションへの計装
   obi:
     # 開発版は main タグ、安定運用したい場合はバージョンタグ(例: v2.x.x)に固定すること
     # https://opentelemetry.io/docs/zero-code/obi/setup/docker/ 記載のイメージ
@@ -11,7 +28,7 @@ services:
     privileged: true
     network_mode: host
     volumes:
-      - ./config.yaml:/etc/obi/config.yaml:ro
+      - ./obi-container/config.yaml:/etc/obi/config.yaml:ro
     environment:
       OTEL_EBPF_CONFIG_PATH: /etc/obi/config.yaml
       # config.yaml の値を一時的に上書きしたい場合は以下のように環境変数を追加できる
