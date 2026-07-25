@@ -18,7 +18,7 @@ do
   "sudo systemctl restart ${HOST1_APP_SYSTEMCTL_SERVICE_NAME}"
 done
 
-echo "Start to deploy OBI configs"
+echo "Start to deploy O11y tools"
 
 for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
 do
