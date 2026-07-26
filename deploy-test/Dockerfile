@@ -4,6 +4,12 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y openssh-server nginx mysql-server tzdata rsync sudo
 RUN mkdir /var/run/sshd
+
+# This container has no systemd (PID 1 is entrypoint.sh), so the real systemctl
+# fails with "System has not been booted with systemd as init system". Stub it
+# out so deploy/deloy.sh's `systemctl restart` step succeeds in this test env.
+RUN printf '#!/bin/sh\necho "[deploy-test stub] systemctl $*"\nexit 0\n' > /usr/bin/systemctl \
+  && chmod +x /usr/bin/systemctl
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 
