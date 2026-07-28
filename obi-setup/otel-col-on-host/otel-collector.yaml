@@ -6,13 +6,23 @@ receivers:
       memory:
       disk:
       network:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+      http:
+        endpoint: "0.0.0.0:4318"
 
 exporters:
   otlp:
     endpoint: "{target hostname}:{target port}"
+    # endpoint: "localhost:24317"
 
 service:
   pipelines:
     metrics:
       receivers: [hostmetrics]
+      exporters: [otlp]
+    traces:
+      receivers: [otlp]
       exporters: [otlp]
