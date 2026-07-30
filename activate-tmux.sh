@@ -5,24 +5,9 @@ source ./hosts/hosts.txt
 
 tmux new -s "local" -d
 
-for ((host_idx=0; host_idx<${FRONTEND_HOSTS_NUMS}; host_idx++));
-do
-  tmux new -s "front-${host_idx}" -d
-done
-
-for ((host_idx=0; host_idx<${DB_HOSTS_NUMS}; host_idx++));
-do
-  tmux new -s "db-${host_idx}" -d
-done
-
-for ((host_idx=0; host_idx<${APP_HOSTS_NUMS}; host_idx++));
-do
-  tmux new -s "app-${host_idx}" -d
-done
-
 for ((host_idx=0; host_idx<${ALL_HOSTS_NUMS}; host_idx++));
 do
-  tmux new -s "host-$((host_idx + 1))" -d
+  tmux new -s "host-$((host_idx + 1))" -d ssh -p ${ALL_HOSTS_SSH_PORT[host_idx]} -i ${ALL_HOSTS_SSH_PRIVATE_KEY[host_idx]} ${ALL_HOSTS_SSH_USER[host_idx]}@${ALL_HOSTS[host_idx]}
 done
 
 # topでの監視用に全hostへのSSH
