@@ -17,6 +17,8 @@ exporters:
   otlp:
     endpoint: "{target hostname}:{target port}"
     # endpoint: "localhost:24317"
+    tls:
+      insecure: true 
 
 service:
   pipelines:
