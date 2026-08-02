@@ -1,6 +1,6 @@
 receivers:
   hostmetrics:
-    collection_interval: 15s
+    collection_interval: 1s
     scrapers:
       cpu:
       memory:
@@ -21,6 +21,9 @@ exporters:
       insecure: true 
 
 service:
+  telemetry:
+    logs:
+      level: debug
   pipelines:
     metrics:
       receivers: [hostmetrics]
