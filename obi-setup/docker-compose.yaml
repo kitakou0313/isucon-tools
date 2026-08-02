@@ -15,6 +15,7 @@ services:
       - "8888:8888"   # Collector metrics (scraped by Prometheus)
     volumes:
       - ./otel-col-on-host/otel-collector.yaml:/etc/otel-collector/otel-collector.yaml
+      - /proc:/hostfs/proc
     # restart: unless-stopped
 
   # obi

@@ -1,11 +1,20 @@
 receivers:
   hostmetrics:
+    # https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/receiver/hostmetricsreceiver/README.md
     collection_interval: 1s
+    root_path: /hostfs
     scrapers:
       cpu:
-      memory:
       disk:
+      load:
+      filesystem:
+      memory:
       network:
+      nfs:
+      paging:
+      processes:
+      process:
+      system:
   otlp:
     protocols:
       grpc:
