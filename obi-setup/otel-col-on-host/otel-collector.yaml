@@ -13,12 +13,18 @@ receivers:
       http:
         endpoint: "0.0.0.0:4318"
 
+processors:
+  resourcedetection:
+    detectors: [system]
+    system:
+      hostname_sources: [os]
+
 exporters:
   otlp:
     endpoint: "{target hostname}:{target port}"
     # endpoint: "localhost:24317"
     tls:
-      insecure: true 
+      insecure: true
 
 service:
   telemetry:
@@ -27,6 +33,7 @@ service:
   pipelines:
     metrics:
       receivers: [hostmetrics]
+      processors: [resourcedetection]
       exporters: [otlp]
     traces:
       receivers: [otlp]
