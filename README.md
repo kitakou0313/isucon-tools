@@ -97,6 +97,10 @@ dockerを用いて実行されるため、インストール不要で使用可�
     - `root`でのsshを避けるため，`/tmp`に転送する実装にしています
         - sshしてコピーしてください
     - 大会形式によっては環境変数管理用の`.env`なども管理する必要がありそうなので良い感じに調整してください
+- `deploy/install-docker.sh`
+    - 全ホストにDockerをインストールするスクリプト
+        - https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository の手順に従い、Ubuntu向けのaptリポジトリ経由でインストール
+    - `hosts/hosts.txt`の`ALL_HOSTS`（全ホスト）に対して実行
 
 ## スクリプトのテストについて
 - `docker-compose.yaml`内の`deploy-test`コンテナには`nginx`, `mysql`がインストールされており、`SSH`経由でアクセス可能になっています。デプロイなどに用いるスクリプトのテストに使用してください
