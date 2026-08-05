@@ -24,9 +24,7 @@ receivers:
 
 processors:
   resourcedetection:
-    detectors: [system]
-    system:
-      hostname_sources: [os]
+    detectors: [docker]
 
 exporters:
   otlp:

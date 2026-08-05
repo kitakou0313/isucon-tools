@@ -9,6 +9,7 @@ services:
     container_name: otel-collector
     command: ["--config=/etc/otel-collector/otel-collector.yaml"]
     network_mode: host
+    privileged: true
     ports:
       - "4317:4317"   # OTLP gRPC (from apps)
       - "4318:4318"   # OTLP HTTP (from apps)
@@ -16,7 +17,10 @@ services:
     volumes:
       - ./otel-col-on-host/otel-collector.yaml:/etc/otel-collector/otel-collector.yaml
       - /proc:/hostfs/proc
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     # restart: unless-stopped
+    group_add:
+      - "999" # docker group ID
 
   # obi
   ## アプリケーションへの計装
