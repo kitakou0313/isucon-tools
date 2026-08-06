@@ -20,7 +20,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     # restart: unless-stopped
     group_add:
-      - "999" # docker group ID
+      - "988" # docker group ID
 
   # obi
   ## アプリケーションへの計装
