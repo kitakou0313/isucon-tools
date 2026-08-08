@@ -1,3 +1,9 @@
+# OTel collectorのconfigの記法
+## receivers, processorsなどの内部に定義するのはComponents
+## {type}または{type}/{instance name}で定義する
+### これにより同一のcomponentのtypeで別の設定が不要されたinstanceを参照できる
+### 各instanceに与える設定の記法は同じ
+
 receivers:
   hostmetrics:
     # https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/receiver/hostmetricsreceiver/README.md
