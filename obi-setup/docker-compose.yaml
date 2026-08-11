@@ -17,9 +17,8 @@ services:
     volumes:
       - ./otel-col-on-host/otel-collector.yaml:/etc/otel-collector/otel-collector.yaml
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /:/hostfs
     # restart: unless-stopped
-    group_add:
-      - "988" # docker user group ID
 
   # obi
   ## アプリケーションへの計装
