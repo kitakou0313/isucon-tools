@@ -16,11 +16,10 @@ services:
       - "8888:8888"   # Collector metrics (scraped by Prometheus)
     volumes:
       - ./otel-col-on-host/otel-collector.yaml:/etc/otel-collector/otel-collector.yaml
-      - /proc:/hostfs/proc
       - /var/run/docker.sock:/var/run/docker.sock:ro
     # restart: unless-stopped
     group_add:
-      - "988" # docker group ID
+      - "988" # docker user group ID
 
   # obi
   ## アプリケーションへの計装
