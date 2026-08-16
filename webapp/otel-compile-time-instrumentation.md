@@ -23,6 +23,7 @@
 - [Go](https://go.dev/) 1.25以上
 - 対象のGoアプリケーションが `./webapp` 配下に配置されていること
     - ルートの`README.md`記載の手順（`scp -rv ${HOST1_SSH_USER}@${HOST1}:/home/isucon/webapp/* ./webapp`）で本番環境から取得
+- ビルドを行う開発機と実行先の本番ホストでCPUアーキテクチャが異なる場合（例: Arm Mac上でビルドし、x86/amd64の本番ホストで実行する場合）はクロスコンパイルが必要（[Arm Mac上でx86ホスト向けにビルドする](#arm-mac上でx86ホスト向けにビルドするクロスコンパイル)を参照）
 
 ## otelcのインストール
 
@@ -52,6 +53,22 @@ otelc go build -o myapp .
 otelc setup
 export GOFLAGS="${GOFLAGS} '-toolexec=otelc toolexec'"
 go build -o myapp .
+```
+
+### Arm Mac上でx86ホスト向けにビルドする（クロスコンパイル）
+
+`otelc` は `go build` を薄くラップしているだけのツールであり、`GOOS` / `GOARCH` / `CGO_ENABLED` といった標準のGoクロスコンパイル環境変数はそのままGoツールチェーンに渡ります。計装は `-toolexec` によるコンパイラ呼び出しのフックで行われるため、ビルドのターゲットOS/ARCHに関わらず同様に注入されます。そのため、Arm Mac（`darwin/arm64`）上でISUCONの本番ホスト（通常はUbuntuなどのx86/amd64環境）向けバイナリをビルドする場合も、通常の`go build`と同じ要領でクロスコンパイル指定を行うだけで計装済みバイナリが得られます。
+
+```sh
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 otelc go build -o myapp .
+```
+
+`GOFLAGS` 経由で`-toolexec`を指定する場合も同様に環境変数を付与します。
+
+```sh
+otelc setup
+export GOFLAGS="${GOFLAGS} '-toolexec=otelc toolexec'"
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o myapp .
 ```
 
 ## 実行時のテレメトリ設定
@@ -173,3 +190,23 @@ otelc --debug go build -o myapp .
 ```sh
 otelc cleanup
 ```
+
+### クロスコンパイルしたバイナリがホストで実行できない場合
+
+Arm Mac上でビルドしたバイナリをx86ホストにデプロイした際に`exec format error`が発生する場合、典型的な原因は`GOOS`/`GOARCH`の指定漏れです。
+
+1. ローカルでビルド成果物のターゲットOS/ARCHを確認する
+
+    ```sh
+    file ./myapp
+    # 期待する出力例: ELF 64-bit LSB executable, x86-64, ...
+    ```
+
+2. 本番ホスト側のアーキテクチャを確認する
+
+    ```sh
+    ssh ${HOST1_SSH_USER}@${HOST1} uname -m
+    # x86_64 の場合は GOARCH=amd64 でビルドする
+    ```
+
+3. 1と2が一致しない場合は、[Arm Mac上でx86ホスト向けにビルドする](#arm-mac上でx86ホスト向けにビルドするクロスコンパイル)の手順で`GOOS`/`GOARCH`を指定してビルドし直す
